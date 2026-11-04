@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Target, Eye, HeartHandshake } from "lucide-react";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
-import globe from "@/assets/globe-global.png";
+import globe from "@/assets/globe-global-people.png";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
