@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Target, Eye, HeartHandshake } from "lucide-react";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
-import site from "@/assets/hero-ghana-site.jpg";
+import globe from "@/assets/globe-global.png";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -32,7 +32,12 @@ function About() {
         <h1 className="mt-3 max-w-3xl text-5xl font-extrabold leading-tight md:text-6xl">We help you build back home, the Calixa way.</h1>
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground">Too many people abroad send money home for a house and get excuses, missing materials or unfinished walls. CalixaHomes was started to change that. You order the materials, we deliver them to your site, and you see every step until your keys are in hand.</p>
       </section>
-      <section className="mx-auto max-w-6xl px-6"><img src={site} alt="Home under construction in Ghana" loading="lazy" width={1920} height={1088} className="h-80 w-full rounded-3xl object-cover md:h-[28rem]" /></section>
+      <section className="mx-auto max-w-6xl px-6">
+        <div className="rounded-3xl bg-secondary px-6 py-12">
+          <img src={globe} alt="Globe showing Africa connected to communities across the world" loading="lazy" width={1024} height={1024} className="mx-auto h-72 w-auto object-contain md:h-96" />
+          <p className="mx-auto max-w-xl pt-8 text-center text-lg text-secondary-foreground">Wherever you are in the world, CalixaHomes reaches your building site back home.</p>
+        </div>
+      </section>
       <section className="mx-auto grid max-w-6xl gap-6 px-6 py-24 md:grid-cols-3">
         {pillars.map(({ icon: I, t, d }) => (
           <div key={t} className="rounded-2xl bg-card p-7 shadow-sm">
