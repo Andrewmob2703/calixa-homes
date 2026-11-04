@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteNav, SiteFooter } from "@/components/SiteChrome";
 import { Headset, ShieldCheck, Truck, Camera, Eye, Globe, MapPin, ShoppingCart, UserCheck, CreditCard, HardHat, Check } from "lucide-react";
 import hero from "@/assets/hero-estate.jpg";
 import delivery from "@/assets/delivery-truck.jpg";
@@ -7,9 +8,9 @@ import site from "@/assets/hero-ghana-site.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "BuildHome — Build your home in Africa from anywhere" },
+      { title: "CalixaHomes — Build The Calixa Way" },
       { name: "description", content: "Diaspora Africans: order cement, iron rods and blocks, get them delivered to your site and follow construction until handover." },
-      { property: "og:title", content: "BuildHome — Build your home in Africa from anywhere" },
+      { property: "og:title", content: "CalixaHomes — Build The Calixa Way" },
       { property: "og:description", content: "Order materials, track deliveries and watch your build progress live." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -55,12 +56,9 @@ function Index() {
         <img src={hero} alt="Large housing estate under construction in Africa" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-hero-overlay" />
         <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-6">
-          <nav className="flex items-center justify-between py-6">
-            <span className="font-display text-2xl font-extrabold text-secondary-foreground">Build<span className="text-primary">Home</span></span>
-            <a href="#how" className="rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground">Get Started</a>
-          </nav>
+          <SiteNav light />
           <div className="flex flex-1 flex-col justify-center pb-24 text-secondary-foreground">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">For Africans in the diaspora</p>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Build The Calixa Way</p>
             <h1 className="max-w-3xl text-5xl font-extrabold leading-[1.05] md:text-7xl">Build back home,<br />without the stress.</h1>
             <p className="mt-6 max-w-xl text-lg opacity-90">Order cement, iron rods and building materials from anywhere in the world. We deliver to your site and keep you updated until your house is done.</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -142,8 +140,8 @@ function Index() {
       <section className="bg-secondary py-20 text-center text-secondary-foreground">
         <h2 className="mx-auto max-w-2xl px-6 text-4xl font-extrabold md:text-5xl">Send materials, not money worries.</h2>
         <a href="#how" className="mt-8 inline-block rounded-full bg-primary px-8 py-3 font-bold text-primary-foreground shadow-glow">Start Your Build</a>
-        <p className="mt-12 text-sm opacity-60">© 2026 BuildHome. Building homes across Africa.</p>
-      </section>
+              </section>
+      <SiteFooter />
     </main>
   );
 }
