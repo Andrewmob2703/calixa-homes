@@ -1,7 +1,12 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
 import { Wrench, Zap, Leaf, PawPrint, Baby, Paintbrush, Sparkles, HeartPulse, Hammer, ShieldCheck, Clock, Globe, Wallet, MessageCircle, UserCheck, Star } from "lucide-react";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { AppComingSoonDialog } from "@/components/AppComingSoonDialog";
 import hero from "@/assets/calixa-care-hero.jpg";
 
 export const Route = createFileRoute("/care")({
@@ -50,6 +55,8 @@ const plans = [
 function CarePage() {
   const [svc, setSvc] = useState("Plumbing");
   const [area, setArea] = useState("Accra");
+  const [date, setDate] = useState<Date>();
+  const [time, setTime] = useState("09:00");
   return (
     <main className="bg-background text-foreground">
       <section className="relative overflow-hidden">
@@ -59,6 +66,7 @@ function CarePage() {
           <SiteNav light />
           <div className="pt-16 text-secondary-foreground">
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Calixa Care</p>
+            <p className="mb-3 font-display text-2xl font-bold">Your Home. Your Family. Our Care.</p>
             <h1 className="max-w-3xl text-5xl font-extrabold leading-[1.05] md:text-7xl">Trusted hands for your home back home.</h1>
             <p className="mt-6 max-w-xl text-lg opacity-90">From fixing a leaking tap to caring for your little ones and pets, book verified tradespeople and caretakers for your family — wherever you are.</p>
           </div>
@@ -73,12 +81,22 @@ function CarePage() {
                 {areas.map((a) => <option key={a}>{a}</option>)}
               </select>
             </label>
-            <label className="text-xs font-bold uppercase text-muted-foreground">When?
-              <select className="mt-1 w-full rounded-xl border border-input bg-background p-3 text-sm font-semibold normal-case text-foreground">
-                <option>As soon as possible</option><option>Within 24 hours</option><option>Next week</option><option>Recurring</option>
-              </select>
-            </label>
-            <Link to="/contact" className="grid place-items-center self-end rounded-xl bg-primary p-3 font-bold text-primary-foreground">Find a pro</Link>
+            <div className="text-xs font-bold uppercase text-muted-foreground">When?
+              <div className="mt-1 flex gap-2">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button type="button" className="flex flex-1 items-center gap-2 rounded-xl border border-input bg-background p-3 text-left text-sm font-semibold normal-case text-foreground">
+                      <CalendarIcon className="h-4 w-4 text-accent" />{date ? format(date, "d MMM yyyy") : <span className="text-muted-foreground">Pick a date</span>}
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar mode="single" selected={date} onSelect={setDate} disabled={(d) => d < new Date(new Date().setHours(0, 0, 0, 0))} initialFocus className="p-3 pointer-events-auto" />
+                  </PopoverContent>
+                </Popover>
+                <input type="time" value={time} onChange={(e) => setTime(e.target.value)} aria-label="Time" className="w-28 rounded-xl border border-input bg-background p-3 text-sm font-semibold text-foreground" />
+              </div>
+            </div>
+            <AppComingSoonDialog source="find_a_pro"><button type="button" className="grid place-items-center self-end rounded-xl bg-primary p-3 font-bold text-primary-foreground">Find a pro</button></AppComingSoonDialog>
           </form>
         </div>
       </section>
@@ -149,7 +167,7 @@ function CarePage() {
         <div className="mt-4 flex flex-wrap justify-center gap-3">{areas.map((a) => <span key={a} className="rounded-full border border-border px-5 py-2 font-semibold">{a}</span>)}</div>
         <h2 className="mx-auto mt-14 max-w-2xl text-4xl font-extrabold md:text-5xl">Are you a skilled pro? Join Calixa Care.</h2>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground">Get steady jobs from diaspora families and get paid on time.</p>
-        <Link to="/contact" className="mt-8 inline-block rounded-full bg-primary px-8 py-3 font-bold text-primary-foreground shadow-glow">Apply as a provider</Link>
+        <AppComingSoonDialog source="provider"><button type="button" className="mt-8 inline-block rounded-full bg-primary px-8 py-3 font-bold text-primary-foreground shadow-glow">Apply as a provider</button></AppComingSoonDialog>
       </section>
       <SiteFooter />
     </main>
