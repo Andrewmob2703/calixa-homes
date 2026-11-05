@@ -18,7 +18,7 @@ export function AppComingSoonDialog({ children, source }: { children: ReactNode;
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     const parsed = emailSchema.safeParse(email);
-    if (!parsed.success) return setError(parsed.error.issues[0].message);
+    if (!parsed.success) return setError(parsed.error.issues[0]?.message ?? "Please enter a valid email");
     setBusy(true);
     setError("");
     const { error } = await supabase.from("app_waitlist").insert({ email: parsed.data, source });
