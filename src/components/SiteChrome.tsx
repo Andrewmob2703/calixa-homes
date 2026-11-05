@@ -11,6 +11,7 @@ export const SOCIALS = {
 };
 
 const navLinks = [
+  { to: "/care", label: "Calixa Care" },
   { to: "/about", label: "About Us" },
   { to: "/faqs", label: "FAQs" },
   { to: "/contact", label: "Contact Us" },

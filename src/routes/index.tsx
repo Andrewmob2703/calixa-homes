@@ -4,6 +4,7 @@ import { Headset, ShieldCheck, Truck, Camera, Eye, Globe, MapPin, ShoppingCart, 
 import hero from "@/assets/hero-estate.jpg";
 import delivery from "@/assets/delivery-truck.jpg";
 import site from "@/assets/hero-ghana-site.jpg";
+import care from "@/assets/calixa-care-hero.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,6 +27,7 @@ const values = [
   { icon: Truck, t: "Fast Site Delivery" },
   { icon: Camera, t: "Photo Proof" },
   { icon: Eye, t: "Full Transparency" },
+  { icon: HardHat, t: "Home Pros on Demand" },
 ];
 const benefits = [
   { icon: ShieldCheck, t: "Trusted local suppliers", d: "Genuine, quality-checked materials at fair local prices." },
@@ -133,6 +135,22 @@ function Index() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* Calixa Care */}
+      <section className="bg-secondary py-24 text-secondary-foreground">
+        <div className="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-2 md:items-center">
+          <img src={care} alt="Electrician and caregiver in a family home" loading="lazy" width={1600} height={1008} className="rounded-3xl object-cover" />
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-widest text-primary">New · Calixa Care</p>
+            <h2 className="mt-3 text-4xl font-extrabold md:text-5xl">After the build, we care for your home.</h2>
+            <p className="mt-4 text-lg opacity-85">Book verified plumbers, electricians, gardeners, cleaners — even pet sitters and nannies — for your family's home, all from abroad.</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {["Plumbers", "Electricians", "Gardeners", "Cleaners", "Pet Care", "Child Care"].map((s) => <span key={s} className="rounded-full bg-secondary-foreground/10 px-4 py-2 text-sm font-semibold">{s}</span>)}
+            </div>
+            <Link to="/care" className="mt-8 inline-block rounded-full bg-primary px-7 py-3 font-bold text-primary-foreground shadow-glow">Explore Calixa Care</Link>
+          </div>
         </div>
       </section>
 
