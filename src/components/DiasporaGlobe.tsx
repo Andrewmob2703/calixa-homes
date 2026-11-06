@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import globePoster from "@/assets/globe-diaspora-build.jpg";
 import earthAsset from "@/assets/globe-earth.jpg.asset.json";
 import logoAsset from "@/assets/calixa-logo.jpg.asset.json";
+import userHeadshots from "@/assets/globe-user-headshots.jpg";
 
 export default function DiasporaGlobe() {
   const host = useRef<HTMLDivElement>(null);
@@ -18,7 +19,6 @@ export default function DiasporaGlobe() {
       const color = (token: string) => new T.Color(palette.getPropertyValue(token).trim());
       const gold = color("--globe-gold");
       const teal = color("--globe-project");
-      const skin = color("--globe-skin");
       const dark = color("--globe-ink");
       const light = color("--globe-light");
       const renderer = new T.WebGLRenderer({ antialias: true, alpha: true });
@@ -38,8 +38,9 @@ export default function DiasporaGlobe() {
       const loader = new T.TextureLoader();
       const map = await loader.loadAsync(earthAsset.url);
       const logo = await loader.loadAsync(logoAsset.url);
+      const portraits = await loader.loadAsync(userHeadshots);
       map.colorSpace = logo.colorSpace = T.SRGBColorSpace;
-      if (disposed) { map.dispose(); logo.dispose(); renderer.dispose(); return; }
+      if (disposed) { map.dispose(); logo.dispose(); portraits.dispose(); renderer.dispose(); return; }
       const earth = new T.Mesh(new T.SphereGeometry(1, 96, 64), new T.MeshStandardMaterial({ map, roughness: 0.65, metalness: 0.15 }));
       earth.rotation.y = -Math.PI / 2;
       world.add(earth);
@@ -51,7 +52,7 @@ export default function DiasporaGlobe() {
         return new T.Vector3(radius * Math.cos(phi) * Math.sin(theta), radius * Math.sin(phi), radius * Math.cos(phi) * Math.cos(theta));
       };
       const material = (c: InstanceType<typeof T.Color>) => new T.MeshStandardMaterial({ color: c, roughness: 0.55 });
-      const goldMat = material(gold), skinMat = material(skin), darkMat = material(dark), lightMat = material(light), tealMat = material(teal);
+      const goldMat = material(gold), darkMat = material(dark), lightMat = material(light), tealMat = material(teal);
       const box = (group: InstanceType<typeof T.Group>, w: number, h: number, d: number, x: number, y: number, z: number, mat: InstanceType<typeof T.MeshStandardMaterial>) => {
         const mesh = new T.Mesh(new T.BoxGeometry(w, h, d), mat);
         mesh.position.set(x, y, z); group.add(mesh); return mesh;
@@ -62,20 +63,37 @@ export default function DiasporaGlobe() {
         group.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), group.position.clone().normalize());
         world.add(group); return group;
       };
-      const origins: [number, number][] = [[40.7,-74], [45.5,-73.6], [51.5,-0.1], [48.9,2.4], [52.5,13.4]];
+      const origins: [number, number, string][] = [[40.7,-74,"USA"], [45.5,-73.6,"Canada"], [51.5,-0.1,"UK"], [48.9,2.4,"France"], [52.5,13.4,"Germany"], [-33.9,151.2,"Australia"]];
       const destinations: [number, number][] = [[5.6,-0.2], [6.5,3.4], [-1.3,36.8], [-26.2,28]];
-      origins.forEach(([lat, lon], index) => {
-        const person = anchor(lat, lon);
-        const head = new T.Mesh(new T.SphereGeometry(0.021, 12, 12), skinMat);
-        head.position.y = 0.15; person.add(head);
-        box(person, .047, .066, .026, 0, .098, 0, index % 2 ? tealMat : goldMat);
-        [-1,1].forEach(side => {
-          box(person,.014,.058,.017,side*.014,.035,0,darkMat);
-          box(person,.013,.057,.014,side*.035,.1,0,skinMat);
-        });
-        box(person,.038,.061,.008,.055,.119,.018,darkMat);
-        const screen = new T.Mesh(new T.PlaneGeometry(.031,.052), new T.MeshBasicMaterial({ map: logo, side: T.DoubleSide }));
-        screen.position.set(.055,.119,.023); person.add(screen);
+      const markerTextures: InstanceType<typeof T.CanvasTexture>[] = [];
+      origins.forEach(([lat, lon, country], index) => {
+        const canvas = document.createElement("canvas");
+        canvas.width = 384; canvas.height = 320;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        const source = portraits.image as HTMLImageElement;
+        const cellWidth = source.width / 3, cellHeight = source.height / 2;
+        ctx.save();
+        ctx.beginPath(); ctx.arc(126, 128, 96, 0, Math.PI * 2); ctx.clip();
+        ctx.drawImage(source, (index % 3) * cellWidth, Math.floor(index / 3) * cellHeight, cellWidth, cellHeight, 30, 32, 192, 192);
+        ctx.restore();
+        ctx.strokeStyle = gold.getStyle(); ctx.lineWidth = 7;
+        ctx.beginPath(); ctx.arc(126, 128, 96, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = dark.getStyle();
+        ctx.beginPath(); ctx.roundRect(225, 62, 104, 174, 15); ctx.fill();
+        ctx.fillStyle = light.getStyle();
+        ctx.fillRect(233, 79, 88, 139);
+        ctx.drawImage(logo.image, 239, 104, 76, 76);
+        ctx.fillStyle = teal.getStyle(); ctx.fillRect(245, 191, 64, 10);
+        ctx.fillStyle = light.getStyle(); ctx.font = "600 30px sans-serif";
+        ctx.textAlign = "center"; ctx.fillText(country, 178, 279);
+        const texture = new T.CanvasTexture(canvas);
+        texture.colorSpace = T.SRGBColorSpace;
+        markerTextures.push(texture);
+        const marker = new T.Sprite(new T.SpriteMaterial({ map: texture, transparent: true, depthTest: true, depthWrite: false }));
+        marker.position.copy(point(lat, lon, 1.16));
+        marker.scale.set(.26, .217, 1);
+        world.add(marker);
       });
       destinations.forEach(([lat, lon]) => {
         const house = anchor(lat, lon);
@@ -117,19 +135,20 @@ export default function DiasporaGlobe() {
         pulses.forEach(({mesh,curve},i)=>mesh.position.copy(curve.getPoint(reduced.matches ? .5 : (time*.15+i*.2)%1)));
         renderer.render(scene,camera); frame=requestAnimationFrame(render);
       };
-      render(); setReady(true);
+      render(); setReady(true); element.dataset.sceneReady = "true";
       cleanup=()=>{
         cancelAnimationFrame(frame); resize.disconnect();
         element.removeEventListener("pointerdown",down); element.removeEventListener("pointermove",move); element.removeEventListener("pointerup",up); element.removeEventListener("pointercancel",up);
-        scene.traverse(object=>{if(object instanceof T.Mesh){object.geometry.dispose();const mats=Array.isArray(object.material)?object.material:[object.material];mats.forEach(mat=>mat.dispose());}});
-        map.dispose();logo.dispose();renderer.dispose();renderer.domElement.remove();
+        scene.traverse(object=>{if(object instanceof T.Mesh){object.geometry.dispose();const mats=Array.isArray(object.material)?object.material:[object.material];mats.forEach(mat=>mat.dispose());} else if (object instanceof T.Sprite) { object.material.dispose(); }});
+        markerTextures.forEach(texture => texture.dispose());
+        map.dispose();logo.dispose();portraits.dispose();renderer.dispose();renderer.domElement.remove();
       };
     }).catch(() => { /* Keep the illustrated fallback if WebGL is unavailable. */ });
     return () => { disposed=true; cleanup(); };
   }, []);
 
   return (
-    <div className="relative aspect-square max-h-[42rem] w-full overflow-hidden md:aspect-[3/2]" role="img" aria-label="Rotating globe connecting CalixaHomes users in the USA, Canada, UK, France and Germany to home construction in Ghana, Nigeria, Kenya and South Africa">
+    <div className="relative aspect-square max-h-[42rem] w-full overflow-hidden md:aspect-[3/2]" role="img" aria-label="Rotating globe connecting CalixaHomes users in the USA, Canada, UK, France, Germany and Australia to home construction in Ghana, Nigeria, Kenya and South Africa">
       <img src={globePoster} alt="" className={`absolute inset-0 h-full w-full object-contain transition-opacity ${ready ? "opacity-0" : "opacity-100"}`} />
       <div ref={host} className="absolute inset-0 cursor-grab touch-pan-y active:cursor-grabbing" />
     </div>
