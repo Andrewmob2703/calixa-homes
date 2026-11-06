@@ -99,6 +99,11 @@
   --sidebar-ring: oklch(0.82 0.17 80);
   --hero-overlay: linear-gradient(180deg, oklch(0.15 0.02 50 / 0.55), oklch(0.15 0.02 50 / 0.85));
   --shadow-glow: 0 20px 50px -15px oklch(0.82 0.17 80 / 0.55);
+  --globe-gold: #f9bd48;
+  --globe-project: #35b8a6;
+  --globe-skin: #a86f49;
+  --globe-ink: #242a2d;
+  --globe-light: #fff5df;
 }
 
 @layer base {

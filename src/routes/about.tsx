@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Target, Eye, HeartHandshake } from "lucide-react";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
-import globe from "@/assets/globe-global-people.png";
+import DiasporaGlobe from "@/components/DiasporaGlobe";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -33,8 +33,8 @@ function About() {
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground">Too many people abroad send money home for a house and get excuses, missing materials or unfinished walls. CalixaHomes was started to change that. You order the materials, we deliver them to your site, and you see every step until your keys are in hand.</p>
       </section>
       <section className="mx-auto max-w-6xl px-6">
-        <div className="rounded-3xl bg-secondary px-6 pb-10 pt-8">
-          <img src={globe} alt="People across the world using the CalixaHomes app on their phones, connected to a build in Africa" loading="lazy" width={827} height={814} className="mx-auto block h-auto max-h-[40rem] w-full object-contain" />
+        <div className="bg-secondary pb-10 pt-8">
+          <DiasporaGlobe />
           <p className="mx-auto max-w-xl pt-6 text-center text-lg text-secondary-foreground">Wherever you are in the world, CalixaHomes reaches your building site back home.</p>
         </div>
       </section>

@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Load the interactive About globe's Three.js engine inside a browser effect, with a static illustration fallback, to keep SSR browser-safe.
