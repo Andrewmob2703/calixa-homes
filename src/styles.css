@@ -106,6 +106,8 @@
   --globe-light: #fff5df;
   --globe-ocean: #392511;
   --globe-land: #e8a833;
+  --globe-sun: #ffffff;
+  --globe-sky: #8fc9f5;
 }
 
 @layer base {

@@ -1,7 +1,21 @@
 export const TURN_SECONDS = 80;
+export const CONNECTION_SECONDS = 4;
+const ROTATION_START = 1.35;
 
 export function globeRotation(seconds: number, reducedMotion = false) {
-  return -0.28 + (reducedMotion ? 0 : Math.max(0, seconds) * Math.PI * 2 / TURN_SECONDS);
+  if (reducedMotion) return -0.28;
+  return ROTATION_START - Math.PI * (1 - Math.cos(Math.max(0, seconds) * Math.PI * 2 / TURN_SECONDS)) / 2;
+}
+
+export function connectionReveal(seconds: number, index: number, reducedMotion = false) {
+  if (reducedMotion) return { marker: 1, line: 1, house: 1 };
+  const elapsed = Math.max(0, seconds) - index * CONNECTION_SECONDS;
+  const clamp = (value: number) => Math.min(1, Math.max(0, value));
+  return {
+    marker: clamp(elapsed / 0.6),
+    line: clamp((elapsed - 0.6) / 2.4),
+    house: clamp((elapsed - 3) / 0.6),
+  };
 }
 
 export const globeUsers = [

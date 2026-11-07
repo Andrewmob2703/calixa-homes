@@ -9,4 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Load the About globe's Three.js engine inside a browser effect with the approved illustration as a loading/WebGL fallback; keep rotation and geographic data in a browser-independent module for testable full revolutions and SSR safety.
+- Load the About globe's Three.js engine inside a browser effect with the approved illustration as a loading/WebGL fallback; keep oscillation, sequential connection timing and geographic data in a browser-independent module for testability and SSR safety.
+- The About globe supports a dev-only `?globeTime=<seconds>` frozen animation time for reproducible visual checks; its host exposes `data-scene-ready` and `data-rotation`.

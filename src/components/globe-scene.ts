@@ -2,7 +2,7 @@ import * as T from "three";
 import earthAsset from "@/assets/globe-earth.jpg.asset.json";
 import logoAsset from "@/assets/calixa-logo.jpg.asset.json";
 import userHeadshots from "@/assets/globe-user-headshots.jpg";
-import { globeRotation, globeUsers, globeSites } from "./globe-motion";
+import { connectionReveal, globeRotation, globeUsers, globeSites } from "./globe-motion";
 
 export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
   let disposed = false;
@@ -10,7 +10,8 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
   const styles = getComputedStyle(element);
   const color = (name: string) => new T.Color(styles.getPropertyValue(name).trim());
   const gold = color("--globe-gold"), light = color("--globe-light");
-  const ink = color("--globe-ink"), land = color("--globe-land"), ocean = color("--globe-ocean");
+  const ink = color("--globe-ink"), land = color("--globe-land");
+  const sun = color("--globe-sun"), sky = color("--globe-sky");
   const renderer = new T.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.outputColorSpace = T.SRGBColorSpace;
@@ -20,10 +21,10 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
   const camera = new T.PerspectiveCamera(38, 1, 0.1, 30);
   camera.position.set(0, .15, 4.1);
   camera.lookAt(0, 0, 0);
-  scene.add(new T.HemisphereLight(light, gold, 2));
-  const key = new T.DirectionalLight(light, 3);
+  scene.add(new T.HemisphereLight(sun, sky, 1.3));
+  const key = new T.DirectionalLight(sun, 2);
   key.position.set(-3, 4, 5); scene.add(key);
-  const rim = new T.DirectionalLight(gold, 2);
+  const rim = new T.DirectionalLight(sky, 1);
   rim.position.set(4, 0, -3); scene.add(rim);
   const world = new T.Group(); scene.add(world);
   const textures: T.Texture[] = [];
@@ -44,32 +45,18 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
   };
   const observer = new ResizeObserver(resize); observer.observe(element); resize();
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  const pulses: { mesh: T.Mesh; curve: T.CatmullRomCurve3 }[] = [];
-  const markers: { sprite: T.Sprite; position: T.Vector3 }[] = [];
+  const connections: { mesh: T.Mesh; pulse: T.Mesh; curve: T.CatmullRomCurve3 }[] = [];
+  const markers: { sprite: T.Sprite; position: T.Vector3; userIndex?: number; siteIndex?: number }[] = [];
+  const tethers: T.Line[] = [];
   const loader = new T.TextureLoader();
   void Promise.all([loader.loadAsync(earthAsset.url), loader.loadAsync(logoAsset.url), loader.loadAsync(userHeadshots)]).then(([map, logo, portraits]) => {
     if (disposed) { map.dispose(); logo.dispose(); portraits.dispose(); return; }
     textures.push(map, logo, portraits);
-    const source = map.image as HTMLImageElement;
-    const canvas = document.createElement("canvas"); canvas.width = 2048; canvas.height = 1024;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("Globe texture unavailable");
-    ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
-    const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const oceanRGB = ocean.clone().convertLinearToSRGB(), landRGB = land.clone().convertLinearToSRGB();
-    for (let i = 0; i < pixels.data.length; i += 4) {
-      const r = pixels.data[i] ?? 0, g = pixels.data[i + 1] ?? 0, b = pixels.data[i + 2] ?? 0;
-      const isOcean = b > r * 1.18 && b > g * 1.04;
-      const c = isOcean ? oceanRGB : landRGB;
-      const shade = isOcean ? .65 + b / 550 : .55 + (r + g) / 700;
-      pixels.data[i] = c.r * 255 * shade;
-      pixels.data[i + 1] = c.g * 255 * shade;
-      pixels.data[i + 2] = c.b * 255 * shade;
-    }
-    ctx.putImageData(pixels, 0, 0);
-    const earth = new T.Mesh(new T.SphereGeometry(1, 72, 48), new T.MeshStandardMaterial({ map: drawTexture(canvas), roughness: .38, metalness: .38, emissive: gold, emissiveIntensity: .1 }));
+    map.colorSpace = T.SRGBColorSpace;
+    const earth = new T.Mesh(new T.SphereGeometry(1, 72, 48), new T.MeshStandardMaterial({ map, roughness: .85, metalness: 0 }));
     earth.rotation.y = -Math.PI / 2; world.add(earth);
-    const lineMat = new T.LineBasicMaterial({ color: gold, transparent: true, opacity: .23 });
+    world.add(new T.Mesh(new T.SphereGeometry(1.018, 72, 48), new T.MeshBasicMaterial({ color: sky, transparent: true, opacity: .13, side: T.BackSide, depthWrite: false })));
+    const lineMat = new T.LineBasicMaterial({ color: sky, transparent: true, opacity: .09 });
     for (let lat = -60; lat <= 60; lat += 30) {
       const points = Array.from({ length: 129 }, (_, i) => point(lat, i / 128 * 360, 1.006));
       world.add(new T.Line(new T.BufferGeometry().setFromPoints(points), lineMat));
@@ -78,10 +65,10 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
       const points = Array.from({ length: 65 }, (_, i) => point(-90 + i / 64 * 180, lon, 1.006));
       world.add(new T.Line(new T.BufferGeometry().setFromPoints(points), lineMat));
     }
-    const addSprite = (texture: T.Texture, position: T.Vector3, width: number, height: number) => {
+    const addSprite = (texture: T.Texture, position: T.Vector3, width: number, height: number, identity: { userIndex?: number; siteIndex?: number }) => {
       const sprite = new T.Sprite(new T.SpriteMaterial({ map: texture, transparent: true, depthWrite: false, toneMapped: false }));
       sprite.position.copy(position); sprite.scale.set(width, height, 1); world.add(sprite);
-      markers.push({ sprite, position }); return sprite;
+      markers.push({ sprite, position, ...identity }); return sprite;
     };
     globeUsers.forEach((user, index) => {
       const card = document.createElement("canvas"); card.width = 384; card.height = 320;
@@ -95,9 +82,10 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
       c.fillStyle = gold.getStyle(); c.fillRect(246, 190, 61, 8);
       c.fillStyle = light.getStyle(); c.font = "600 29px Manrope, sans-serif"; c.textAlign = "center"; c.fillText(user.country, 180, 277);
       const marker = point(user.markerLat, user.markerLon, 1.22);
-      addSprite(drawTexture(card), marker, .35, .292);
+      addSprite(drawTexture(card), marker, .35, .292, { userIndex: index });
       const tether = new T.BufferGeometry().setFromPoints([point(user.lat, user.lon, 1.015), marker]);
-      world.add(new T.Line(tether, new T.LineBasicMaterial({ color: gold, transparent: true, opacity: .55 })));
+      const tetherLine = new T.Line(tether, new T.LineBasicMaterial({ color: gold, transparent: true, opacity: .55 }));
+      world.add(tetherLine); tethers.push(tetherLine);
     });
     // Small distant project markers intentionally use canvas art rather than heavy architectural models.
     globeSites.forEach((site, index) => {
@@ -123,34 +111,48 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
       });
       c.strokeStyle = gold.getStyle(); c.lineWidth = 5; c.beginPath(); c.moveTo(220, 198); c.lineTo(220, 21); c.lineTo(134, 21); c.moveTo(220, 21); c.lineTo(174, 57); c.lineTo(220, 57); c.stroke();
       const lonOffset = index === 0 ? -6 : index === 1 ? 6 : 0;
-      addSprite(drawTexture(house), point(site.lat, site.lon + lonOffset, 1.1), .21, .21);
+      addSprite(drawTexture(house), point(site.lat, site.lon + lonOffset, 1.1), .21, .21, { siteIndex: index });
     });
     globeUsers.forEach((user, index) => {
       const site = globeSites[index % globeSites.length]; if (!site) return;
-      const from = point(user.lat, user.lon), to = point(site.lat, site.lon);
+      const siteIndex = index % globeSites.length;
+      const lonOffset = siteIndex === 0 ? -6 : siteIndex === 1 ? 6 : 0;
+      const from = point(user.lat, user.lon), to = point(site.lat, site.lon + lonOffset);
       const dot = Math.max(-1, Math.min(1, from.dot(to))), angle = Math.acos(dot);
       const points = Array.from({ length: 65 }, (_, i) => {
         const t = i / 64;
         const direction = angle < .001 ? from.clone() : from.clone().multiplyScalar(Math.sin((1 - t) * angle)).add(to.clone().multiplyScalar(Math.sin(t * angle))).divideScalar(Math.sin(angle));
-        return direction.normalize().multiplyScalar(1.018 + Math.sin(t * Math.PI) * .25);
+        return direction.normalize().multiplyScalar(1.018 + Math.sin(t * Math.PI) * .25 + t * .082);
       });
       const curve = new T.CatmullRomCurve3(points);
-      world.add(new T.Mesh(new T.TubeGeometry(curve, 64, .004, 5, false), new T.MeshBasicMaterial({ color: gold })));
+      const connection = new T.Mesh(new T.TubeGeometry(curve, 64, .004, 5, false), new T.MeshBasicMaterial({ color: gold }));
+      world.add(connection);
       const mesh = new T.Mesh(new T.SphereGeometry(.014, 8, 8), new T.MeshBasicMaterial({ color: light }));
-      world.add(mesh); pulses.push({ mesh, curve });
+      world.add(mesh); connections.push({ mesh: connection, pulse: mesh, curve });
     });
     const start = performance.now();
+    const frozenTime = import.meta.env.DEV ? new URLSearchParams(location.search).get("globeTime") : null;
+    const timeOverride = frozenTime !== null && Number.isFinite(Number(frozenTime)) ? Math.max(0, Number(frozenTime)) : undefined;
     const vector = new T.Vector3();
     const render = () => {
       if (disposed) return;
-      const seconds = (performance.now() - start) / 1000;
+      const seconds = timeOverride ?? (performance.now() - start) / 1000;
+      const reveals = globeUsers.map((_, index) => connectionReveal(seconds, index, reduced.matches));
       world.rotation.y = globeRotation(seconds, reduced.matches);
       world.updateMatrixWorld(true);
-      markers.forEach(({ sprite, position }) => {
+      markers.forEach(({ sprite, position, userIndex, siteIndex }) => {
         vector.copy(position).applyMatrix4(world.matrixWorld);
-        sprite.visible = vector.dot(camera.position) > .52;
+        const opacity = userIndex !== undefined ? (reveals[userIndex]?.marker ?? 0) : Math.max(0, ...reveals.map((reveal, index) => index % globeSites.length === siteIndex ? reveal.house : 0));
+        sprite.material.opacity = opacity;
+        sprite.visible = opacity > 0 && vector.dot(camera.position) > .52;
       });
-      pulses.forEach(({ mesh, curve }, i) => mesh.position.copy(curve.getPoint(reduced.matches ? .5 : (seconds * .1 + i * .16) % 1)));
+      tethers.forEach((line, index) => { line.visible = (reveals[index]?.marker ?? 0) > 0; });
+      connections.forEach(({ mesh, pulse, curve }, index) => {
+        const progress = reveals[index]?.line ?? 0;
+        mesh.geometry.setDrawRange(0, Math.floor(progress * 64) * 5 * 6);
+        pulse.visible = progress > 0;
+        pulse.position.copy(curve.getPoint(progress < 1 ? progress : reduced.matches ? .5 : (seconds * .1 + index * .16) % 1));
+      });
       renderer.render(scene, camera);
       element.dataset["rotation"] = String(world.rotation.y);
       frame = requestAnimationFrame(render);
