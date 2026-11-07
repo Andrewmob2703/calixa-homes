@@ -104,6 +104,8 @@
   --globe-skin: #a86f49;
   --globe-ink: #242a2d;
   --globe-light: #fff5df;
+  --globe-ocean: #392511;
+  --globe-land: #e8a833;
 }
 
 @layer base {
@@ -123,24 +125,4 @@
 @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
 @utility animate-marquee { animation: marquee 30s linear infinite; }
 
-.globe-illustration {
-  perspective: 1200px;
-}
-
-.globe-illustration-art {
-  transform-origin: center;
-  animation: globe-illustration-turn 20s ease-in-out infinite;
-  will-change: transform;
-}
-
-@keyframes globe-illustration-turn {
-  0%, 100% { transform: rotateY(-12deg) rotateX(2deg) rotateZ(-1deg) scale(0.95); }
-  50% { transform: rotateY(12deg) rotateX(-2deg) rotateZ(1deg) scale(0.95); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .globe-illustration-art {
-    animation: none;
-    will-change: auto;
-  }
-}
+.globe-canvas canvas { display: block; width: 100%; height: 100%; }
