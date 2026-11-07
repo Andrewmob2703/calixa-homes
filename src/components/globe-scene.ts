@@ -18,7 +18,7 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
   element.appendChild(renderer.domElement);
   const scene = new T.Scene();
   const camera = new T.PerspectiveCamera(38, 1, 0.1, 30);
-  camera.position.set(0, .15, 4.55);
+  camera.position.set(0, .15, 4.1);
   camera.lookAt(0, 0, 0);
   scene.add(new T.HemisphereLight(light, gold, 2));
   const key = new T.DirectionalLight(light, 3);
@@ -103,10 +103,25 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
     globeSites.forEach((site, index) => {
       const house = document.createElement("canvas"); house.width = 256; house.height = 256;
       const c = house.getContext("2d"); if (!c) return;
-      c.fillStyle = gold.getStyle(); c.beginPath(); c.moveTo(25, 105); c.lineTo(120, 35); c.lineTo(220, 105); c.closePath(); c.fill();
-      c.fillStyle = light.getStyle(); c.fillRect(49, 105, 144, 98);
-      c.fillStyle = ink.getStyle(); c.fillRect(107, 144, 32, 59); c.fillRect(66, 127, 25, 27); c.fillRect(154, 127, 25, 27);
-      c.strokeStyle = gold.getStyle(); c.lineWidth = 5; c.beginPath(); c.moveTo(207, 205); c.lineTo(207, 22); c.lineTo(137, 22); c.stroke();
+      const polygon = (points: [number, number][], fill: T.Color) => {
+        c.fillStyle = fill.getStyle(); c.beginPath();
+        points.forEach(([x, y], i) => i === 0 ? c.moveTo(x, y) : c.lineTo(x, y));
+        c.closePath(); c.fill();
+      };
+      polygon([[21, 197], [117, 238], [226, 180], [124, 141]], gold);
+      polygon([[47, 91], [129, 125], [129, 220], [47, 184]], light);
+      polygon([[129, 125], [214, 82], [214, 178], [129, 220]], land);
+      polygon([[41, 90], [124, 46], [220, 81], [129, 130]], gold);
+      polygon([[107, 161], [123, 167], [123, 217], [107, 210]], ink);
+      [[60, 123], [86, 134]].forEach(([x, y]) => {
+        if (x === undefined || y === undefined) return;
+        polygon([[x, y], [x + 16, y + 6], [x + 16, y + 26], [x, y + 20]], ink);
+      });
+      [[143, 142], [177, 125]].forEach(([x, y]) => {
+        if (x === undefined || y === undefined) return;
+        polygon([[x, y], [x + 18, y - 9], [x + 18, y + 13], [x, y + 22]], ink);
+      });
+      c.strokeStyle = gold.getStyle(); c.lineWidth = 5; c.beginPath(); c.moveTo(220, 198); c.lineTo(220, 21); c.lineTo(134, 21); c.moveTo(220, 21); c.lineTo(174, 57); c.lineTo(220, 57); c.stroke();
       const lonOffset = index === 0 ? -6 : index === 1 ? 6 : 0;
       addSprite(drawTexture(house), point(site.lat, site.lon + lonOffset, 1.1), .21, .21);
     });
