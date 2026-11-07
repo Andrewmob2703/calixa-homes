@@ -9,4 +9,4 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Load the interactive About globe's Three.js engine inside a browser effect, with a static illustration fallback, to keep SSR browser-safe.
+- Animate the approved About globe illustration with CSS rather than replacing it with a different 3D scene; this preserves its face and house artwork and stays SSR-safe. Any future Three.js engine must load inside a browser effect with a static fallback.
