@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import globePoster from "@/assets/globe-diaspora-build.jpg";
+import globePoster from "@/assets/globe-diaspora-approved.jpg.asset.json";
+import { Rotate3D, Image } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import earthAsset from "@/assets/globe-earth.jpg.asset.json";
 import logoAsset from "@/assets/calixa-logo.jpg.asset.json";
 import userHeadshots from "@/assets/globe-user-headshots.jpg";
@@ -7,8 +9,10 @@ import userHeadshots from "@/assets/globe-user-headshots.jpg";
 export default function DiasporaGlobe() {
   const host = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
+  const [interactive, setInteractive] = useState(false);
 
   useEffect(() => {
+    if (!interactive) return;
     const element = host.current;
     if (!element) return;
     let disposed = false;
@@ -135,7 +139,7 @@ export default function DiasporaGlobe() {
         pulses.forEach(({mesh,curve},i)=>mesh.position.copy(curve.getPoint(reduced.matches ? .5 : (time*.15+i*.2)%1)));
         renderer.render(scene,camera); frame=requestAnimationFrame(render);
       };
-      render(); setReady(true); element.dataset.sceneReady = "true";
+      render(); setReady(true); element.dataset["sceneReady"] = "true";
       cleanup=()=>{
         cancelAnimationFrame(frame); resize.disconnect();
         element.removeEventListener("pointerdown",down); element.removeEventListener("pointermove",move); element.removeEventListener("pointerup",up); element.removeEventListener("pointercancel",up);
@@ -144,13 +148,21 @@ export default function DiasporaGlobe() {
         map.dispose();logo.dispose();portraits.dispose();renderer.dispose();renderer.domElement.remove();
       };
     }).catch(() => { /* Keep the illustrated fallback if WebGL is unavailable. */ });
-    return () => { disposed=true; cleanup(); };
-  }, []);
+    return () => { disposed=true; cleanup(); delete element.dataset["sceneReady"]; };
+  }, [interactive]);
 
   return (
-    <div className="relative aspect-square max-h-[42rem] w-full overflow-hidden md:aspect-[3/2]" role="img" aria-label="Rotating globe connecting CalixaHomes users in the USA, Canada, UK, France, Germany and Australia to home construction in Ghana, Nigeria, Kenya and South Africa">
-      <img src={globePoster} alt="" className={`absolute inset-0 h-full w-full object-contain transition-opacity ${ready ? "opacity-0" : "opacity-100"}`} />
-      <div ref={host} className="absolute inset-0 cursor-grab touch-pan-y active:cursor-grabbing" />
+    <div className="relative w-full">
+      <div className="relative aspect-[3/2] max-h-[42rem] w-full overflow-hidden" role="img" aria-label="Globe connecting CalixaHomes users in the USA, Canada, UK, France, Germany and Australia to home construction in Ghana, Nigeria, Kenya and South Africa">
+        <img src={globePoster.url} alt="" className={`absolute inset-0 h-full w-full object-contain transition-opacity ${interactive && ready ? "opacity-0" : "opacity-100"}`} />
+        {interactive && <div ref={host} className="absolute inset-0 cursor-grab touch-pan-y active:cursor-grabbing" />}
+      </div>
+      <div className="mt-4 flex justify-center">
+        <Button variant="secondary" onClick={() => { setReady(false); setInteractive(value => !value); }}>
+          {interactive ? <Image /> : <Rotate3D />}
+          {interactive ? "View illustration" : "Rotate globe"}
+        </Button>
+      </div>
     </div>
   );
 }
