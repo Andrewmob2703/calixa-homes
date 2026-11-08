@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Mail, Phone } from "lucide-react";
 import logo from "@/assets/calixa-logo.jpg.asset.json";
+import { AppComingSoonDialog } from "@/components/AppComingSoonDialog";
+import { Button } from "@/components/ui/button";
 
 export const SUPPORT_EMAIL = "help@calixahomes.com";
 export const SUPPORT_PHONE = "+1 (925) 384-6734";
@@ -27,7 +29,7 @@ export function Logo({ size = 44 }: { size?: number }) {
   );
 }
 
-export function SiteNav({ light = false }: { light?: boolean }) {
+export function SiteNav({ light = false, getStartedSource }: { light?: boolean; getStartedSource?: string }) {
   return (
     <nav className={`flex flex-wrap items-center justify-between gap-4 py-6 ${light ? "text-secondary-foreground" : "text-foreground"}`}>
       <Logo />
@@ -35,7 +37,11 @@ export function SiteNav({ light = false }: { light?: boolean }) {
         {navLinks.map((l) => (
           <Link key={l.to} to={l.to} className="hidden opacity-90 hover:text-primary sm:inline" activeProps={{ className: "text-primary" }}>{l.label}</Link>
         ))}
-        <Link to="/contact" className="rounded-full bg-primary px-5 py-2 font-bold text-primary-foreground">Get Started</Link>
+        {getStartedSource ? (
+          <AppComingSoonDialog source={getStartedSource} description="The CalixaHomes mobile app is in development. Order building materials and track your project when it launches.">
+            <Button className="h-auto rounded-full px-5 py-2 font-bold">Get Started</Button>
+          </AppComingSoonDialog>
+        ) : <Link to="/contact" className="rounded-full bg-primary px-5 py-2 font-bold text-primary-foreground">Get Started</Link>}
       </div>
     </nav>
   );

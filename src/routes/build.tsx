@@ -4,6 +4,8 @@ import { Headset, ShieldCheck, Truck, Camera, Eye, Globe, MapPin, ShoppingCart, 
 import hero from "@/assets/hero-estate.jpg";
 import delivery from "@/assets/calixa-build-branded-delivery.jpg";
 import site from "@/assets/hero-ghana-site.jpg";
+import { AppComingSoonDialog } from "@/components/AppComingSoonDialog";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/build")({
   head: () => ({
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/build")({
 });
 
 const materials = ["Cement", "Iron Rods", "Concrete Blocks", "Sand & Gravel", "Roofing Sheets", "Tiles", "Plumbing", "Electricals"];
+const appDescription = "The CalixaHomes mobile app is in development. Order building materials and track your project when it launches.";
 const values = [
   { icon: Headset, t: "Dedicated Support" },
   { icon: ShieldCheck, t: "Verified Suppliers" },
@@ -57,14 +60,18 @@ function BuildPage() {
         <img src={hero} alt="Large housing estate under construction in Africa" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-hero-overlay" />
         <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-6">
-          <SiteNav light />
+          <SiteNav light getStartedSource="build_get_started" />
           <div className="flex flex-1 flex-col justify-center pb-24 text-secondary-foreground">
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Build The Calixa Way</p>
             <h1 className="max-w-3xl text-5xl font-extrabold leading-[1.05] md:text-7xl">Build back home,<br />without the stress.</h1>
             <p className="mt-6 max-w-xl text-lg opacity-90">Order cement, iron rods and building materials from anywhere in the world. We deliver to your site and keep you updated until your house is done.</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href="#how" className="rounded-full bg-primary px-7 py-3 font-bold text-primary-foreground shadow-glow">Start Ordering</a>
-              <a href="#track" className="rounded-full border border-secondary-foreground/40 px-7 py-3 font-bold">Track a Project</a>
+              <AppComingSoonDialog source="build_start_ordering" description={appDescription}>
+                <Button className="h-auto rounded-full px-7 py-3 font-bold shadow-glow">Start Ordering</Button>
+              </AppComingSoonDialog>
+              <AppComingSoonDialog source="build_track_project" description={appDescription}>
+                <Button variant="outline" className="h-auto rounded-full border-secondary-foreground/40 bg-transparent px-7 py-3 font-bold text-secondary-foreground">Track a Project</Button>
+              </AppComingSoonDialog>
             </div>
           </div>
         </div>
@@ -140,7 +147,9 @@ function BuildPage() {
       {/* CTA */}
       <section className="bg-secondary py-20 text-center text-secondary-foreground">
         <h2 className="mx-auto max-w-2xl px-6 text-4xl font-extrabold md:text-5xl">Send materials, not money worries.</h2>
-        <a href="#how" className="mt-8 inline-block rounded-full bg-primary px-8 py-3 font-bold text-primary-foreground shadow-glow">Start Your Build</a>
+        <AppComingSoonDialog source="build_start_your_build" description={appDescription}>
+          <Button className="mt-8 h-auto rounded-full px-8 py-3 font-bold shadow-glow">Start Your Build</Button>
+        </AppComingSoonDialog>
               </section>
       <SiteFooter />
     </main>

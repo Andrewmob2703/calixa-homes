@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 
 const emailSchema = z.string().trim().email("Please enter a valid email").max(255);
 
-export function AppComingSoonDialog({ children, source }: { children: ReactNode; source: string }) {
+export function AppComingSoonDialog({ children, source, description = "Booking pros and joining as a provider will happen in our mobile app, launching soon." }: { children: ReactNode; source: string; description?: string }) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<"info" | "form" | "done">("info");
   const [email, setEmail] = useState("");
@@ -35,7 +35,7 @@ export function AppComingSoonDialog({ children, source }: { children: ReactNode;
           <div className="mb-2 grid h-12 w-12 place-items-center rounded-xl bg-primary"><Smartphone className="h-6 w-6 text-primary-foreground" /></div>
           <DialogTitle className="font-display text-2xl">{step === "done" ? "You're on the list!" : "The Calixa app is coming soon"}</DialogTitle>
           <DialogDescription>
-            {step === "done" ? "We'll email you as soon as the CalixaHomes app is ready." : "Booking pros and joining as a provider will happen in our mobile app, launching soon."}
+            {step === "done" ? "We'll email you as soon as the CalixaHomes app is ready." : description}
           </DialogDescription>
         </DialogHeader>
         {step === "info" && <Button onClick={() => setStep("form")} className="w-full font-bold">Notify me when it's ready</Button>}
