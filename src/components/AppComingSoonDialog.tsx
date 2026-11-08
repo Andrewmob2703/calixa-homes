@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import { Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { Smartphone, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -47,6 +48,9 @@ export function AppComingSoonDialog({ children, source, description = "Booking p
           </form>
         )}
         {step === "done" && <CheckCircle2 className="mx-auto h-12 w-12 text-accent" />}
+        <Button asChild variant="outline" className="w-full font-bold">
+          <Link to="/contact" onClick={() => setOpen(false)}>Contact Us</Link>
+        </Button>
       </DialogContent>
     </Dialog>
   );
