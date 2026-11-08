@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
-import { Wrench, Zap, Leaf, PawPrint, Baby, Paintbrush, Sparkles, HeartPulse, Hammer, ShieldCheck, Clock, Globe, Wallet, MessageCircle, UserCheck, Star } from "lucide-react";
+import { ShieldCheck, Clock, Globe, Wallet, MessageCircle, UserCheck, Star } from "lucide-react";
+import { careServices as services } from "@/components/care-services";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
@@ -13,10 +14,10 @@ import { careImages } from "@/components/service-images";
 export const Route = createFileRoute("/care")({
   head: () => ({
     meta: [
-      { title: "Calixa Care — Book trusted home pros & caretakers" },
-      { name: "description", content: "Book verified plumbers, electricians, gardeners, cleaners, pet sitters and nannies for your home in Africa — from anywhere in the world." },
+      { title: "Calixa Care — Trusted house maintenance professionals" },
+      { name: "description", content: "Book verified plumbers, electricians, gardeners, cleaners, painters and repair professionals for your home in Africa — from anywhere in the world." },
       { property: "og:title", content: "Calixa Care — Trusted hands for your home back home" },
-      { property: "og:description", content: "Verified tradespeople and caretakers for your family's home, booked from abroad." },
+      { property: "og:description", content: "Trusted house maintenance, repairs, cleaning and gardening for your home back home, booked from abroad." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -24,25 +25,14 @@ export const Route = createFileRoute("/care")({
   component: CarePage,
 });
 
-const services = [
-  { icon: Wrench, t: "Plumbing", d: "Leaks, borehole pumps, water heaters and new fittings." },
-  { icon: Zap, t: "Electrical", d: "Wiring, solar & inverter setups, faults and installs." },
-  { icon: Leaf, t: "Gardening", d: "Lawn care, hedges, compound clearing and landscaping." },
-  { icon: Sparkles, t: "Cleaning", d: "Deep cleans, move-ins and regular housekeeping." },
-  { icon: Paintbrush, t: "Painting & Finishing", d: "Interior and exterior repaints, POP and touch-ups." },
-  { icon: Hammer, t: "Carpentry & Repairs", d: "Doors, roofing patches, furniture and fixes." },
-  { icon: PawPrint, t: "Pet Care", d: "Feeding, walking, vet trips and home pet-sitting." },
-  { icon: Baby, t: "Child Care", d: "Vetted nannies, school runs and after-school care." },
-  { icon: HeartPulse, t: "Elder Care", d: "Companions and caregivers for parents back home." },
-];
 const why = [
   { icon: Clock, t: "Swift matching", d: "Get paired with a nearby pro, often the same day." },
   { icon: ShieldCheck, t: "Vetted & insured", d: "ID, background and skills checks on every provider." },
   { icon: Wallet, t: "Upfront pricing", d: "See the quote before you book. No surprises." },
-  { icon: Globe, t: "Built for the diaspora", d: "Book for family from London, Houston or Toronto." },
+  { icon: Globe, t: "Built for the diaspora", d: "Maintain your home from London, Houston or Toronto." },
 ];
 const steps = [
-  { icon: MessageCircle, t: "Tell us what's needed", d: "Pick a service, the home address and a time that suits your family." },
+  { icon: MessageCircle, t: "Tell us what's needed", d: "Pick a service, the home address and a time that suits you." },
   { icon: UserCheck, t: "Meet your pro", d: "We match a verified, highly-rated professional and share their profile." },
   { icon: Star, t: "Relax & review", d: "Get photo updates when the job is done, pay securely and rate the visit." },
 ];
@@ -50,7 +40,6 @@ const areas = ["Accra", "Kumasi", "Tema", "Takoradi", "Lagos", "Abuja", "Nairobi
 const plans = [
   { n: "One-off", p: "Pay per job", f: ["Any single service", "Photo proof on completion", "Satisfaction guarantee"] },
   { n: "Home Watch", p: "Monthly", f: ["Monthly property inspection", "Gardening & cleaning visits", "Priority repairs", "Monthly report with photos"], hot: true },
-  { n: "Family Care", p: "Monthly", f: ["Dedicated caretaker or nanny", "Weekly check-in calls", "Replacement cover", "Care log you can view"] },
 ];
 
 function CarePage() {
@@ -67,9 +56,9 @@ function CarePage() {
           <SiteNav light />
           <div className="pt-16 text-secondary-foreground">
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Calixa Care</p>
-            <p className="mb-3 font-display text-2xl font-bold">Your Home. Your Family. Our Care.</p>
+            <p className="mb-3 font-display text-2xl font-bold">Your Home. Our Care.</p>
             <h1 className="max-w-3xl text-5xl font-extrabold leading-[1.05] md:text-7xl">Trusted hands for your home back home.</h1>
-            <p className="mt-6 max-w-xl text-lg opacity-90">From fixing a leaking tap to caring for your little ones and pets, book verified tradespeople and caretakers for your family — wherever you are.</p>
+            <p className="mt-6 max-w-xl text-lg opacity-90">From fixing a leaking tap to keeping your garden tidy, book verified house-maintenance professionals to look after your property — wherever you are.</p>
           </div>
           <form onSubmit={(e) => e.preventDefault()} className="mt-10 grid gap-3 rounded-3xl bg-card p-4 text-card-foreground shadow-glow md:grid-cols-4">
             <label className="text-xs font-bold uppercase text-muted-foreground">What do you need?
@@ -104,8 +93,8 @@ function CarePage() {
 
       <section className="mx-auto max-w-6xl px-6 py-24">
         <div className="grid gap-8 md:grid-cols-2 md:items-end">
-          <h2 className="text-4xl font-extrabold md:text-5xl">Home care shouldn't be stressful — especially from abroad.</h2>
-          <p className="text-lg text-muted-foreground">Your house is built. Now keep it, and the people in it, well looked after. Every Calixa Care provider is screened, trained and accountable to us.</p>
+          <h2 className="text-4xl font-extrabold md:text-5xl">House maintenance shouldn't be stressful — especially from abroad.</h2>
+          <p className="text-lg text-muted-foreground">Your house is built. Now keep it clean, well maintained and in great condition. Every Calixa Care provider is screened, trained and accountable to us.</p>
         </div>
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map(({ icon: I, t, d }) => (
@@ -150,7 +139,7 @@ function CarePage() {
       <section className="bg-muted py-24">
         <div className="mx-auto max-w-6xl px-6">
           <h2 className="text-center text-4xl font-extrabold md:text-5xl">Care plans for peace of mind</h2>
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
+          <div className="mt-14 grid gap-6 md:grid-cols-2">
             {plans.map((p) => (
               <div key={p.n} className={`rounded-3xl p-8 ${p.hot ? "bg-secondary text-secondary-foreground shadow-glow" : "bg-card"}`}>
                 {p.hot && <span className="rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground">Most popular</span>}
@@ -167,7 +156,7 @@ function CarePage() {
         <p className="text-sm font-semibold uppercase tracking-widest text-accent">Now serving</p>
         <div className="mt-4 flex flex-wrap justify-center gap-3">{areas.map((a) => <span key={a} className="rounded-full border border-border px-5 py-2 font-semibold">{a}</span>)}</div>
         <h2 className="mx-auto mt-14 max-w-2xl text-4xl font-extrabold md:text-5xl">Are you a skilled pro? Join Calixa Care.</h2>
-        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">Get steady jobs from diaspora families and get paid on time.</p>
+        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">Get steady house-maintenance jobs from diaspora homeowners and get paid on time.</p>
         <AppComingSoonDialog source="provider"><button type="button" className="mt-8 inline-block rounded-full bg-primary px-8 py-3 font-bold text-primary-foreground shadow-glow">Apply as a provider</button></AppComingSoonDialog>
       </section>
       <SiteFooter />

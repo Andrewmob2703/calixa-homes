@@ -1,4 +1,6 @@
 # Cinematic globe
+- [x] Remove people and pet care services, plans and wording from Calixa Care and the landing page.
+- [x] Replace people-care photos with branded home-maintenance imagery and verify slideshows.
 - [x] Generate Build and Care photos and add service-specific and combined landing slideshows.
 - [x] Verify slideshow controls, automatic playback and mobile layouts.
 - [x] Add the CalixaHomes logo to all workers’ gear in Build and Care photos.

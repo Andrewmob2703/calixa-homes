@@ -4,13 +4,13 @@ import { SiteNav, SiteFooter } from "@/components/SiteChrome";
 import { ServiceSlideshow } from "@/components/ServiceSlideshow";
 import { landingImages } from "@/components/service-images";
 import buildImg from "@/assets/calixa-build-branded-delivery.jpg";
-import careImg from "@/assets/calixa-care-team-branded.jpg";
+import careImg from "@/assets/calixa-care-plumbing.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "CalixaHomes — Build The Calixa Way" },
-      { name: "description", content: "CalixaHomes helps Africans abroad build and care for their homes back home: order and track building materials, or book trusted home pros and caretakers." },
+      { name: "description", content: "CalixaHomes helps Africans abroad build and maintain their homes back home: order and track building materials, or book trusted house-maintenance professionals." },
       { property: "og:title", content: "CalixaHomes — Build The Calixa Way" },
       { property: "og:description", content: "Build your home with Calixa Build. Care for it with Calixa Care. All from anywhere in the world." },
       { property: "og:type", content: "website" },
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/")({
 
 const services = [
   { to: "/build" as const, name: "Calixa Build", tag: "Build your home", img: buildImg, alt: "Cement and iron rods delivered to a house under construction", d: "Order cement, iron rods, blocks and more. We deliver to your site and you follow every stage of construction until handover." },
-  { to: "/care" as const, name: "Calixa Care", tag: "Care for your home", img: careImg, alt: "Electrician and caregiver in a family home", d: "Book verified plumbers, electricians, gardeners and cleaners — plus pet sitters, nannies and elder carers for your family." },
+  { to: "/care" as const, name: "Calixa Care", tag: "Care for your home", img: careImg, alt: "CalixaHomes plumber maintaining a kitchen sink", d: "Keep your house in great shape with verified plumbers, electricians, gardeners, cleaners, painters and repair professionals." },
 ];
 
 function Landing() {
