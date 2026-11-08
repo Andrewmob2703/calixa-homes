@@ -37,6 +37,7 @@ export function AppComingSoonDialog({ children, source, description = "Booking p
           <DialogTitle className="font-display text-2xl">{step === "done" ? "You're on the list!" : "The Calixa app is coming soon"}</DialogTitle>
           <DialogDescription>
             {step === "done" ? "We'll email you as soon as the CalixaHomes app is ready." : description}
+            {" In the meantime, you can contact us directly to get started today—no need to wait for the app."}
           </DialogDescription>
         </DialogHeader>
         {step === "info" && <Button onClick={() => setStep("form")} className="w-full font-bold">Notify me when it's ready</Button>}
