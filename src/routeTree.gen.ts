@@ -15,6 +15,7 @@ import { Route as BuildRouteImport } from './routes/build'
 import { Route as CareRouteImport } from './routes/care'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqsRouteImport } from './routes/faqs'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const FaqsRoute = FaqsRouteImport.update({
   path: '/faqs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/care': typeof CareRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/care': typeof CareRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,13 +79,36 @@ export interface FileRoutesById {
   '/care': typeof CareRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/build' | '/care' | '/contact' | '/faqs'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/build'
+    | '/care'
+    | '/contact'
+    | '/faqs'
+    | '/privacy-policy'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/build' | '/care' | '/contact' | '/faqs'
-  id: '__root__' | '/' | '/about' | '/build' | '/care' | '/contact' | '/faqs'
+  to:
+    | '/'
+    | '/about'
+    | '/build'
+    | '/care'
+    | '/contact'
+    | '/faqs'
+    | '/privacy-policy'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/build'
+    | '/care'
+    | '/contact'
+    | '/faqs'
+    | '/privacy-policy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -87,6 +118,7 @@ export interface RootRouteChildren {
   CareRoute: typeof CareRoute
   ContactRoute: typeof ContactRoute
   FaqsRoute: typeof FaqsRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -133,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -143,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   CareRoute: CareRoute,
   ContactRoute: ContactRoute,
   FaqsRoute: FaqsRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
