@@ -7,7 +7,8 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AppComingSoonDialog } from "@/components/AppComingSoonDialog";
-import hero from "@/assets/calixa-care-hero.jpg";
+import { ServiceSlideshow } from "@/components/ServiceSlideshow";
+import { careImages } from "@/components/service-images";
 
 export const Route = createFileRoute("/care")({
   head: () => ({
@@ -60,9 +61,9 @@ function CarePage() {
   return (
     <main className="bg-background text-foreground">
       <section className="relative overflow-hidden">
-        <img src={hero} alt="Electrician and caregiver at work in a family home" width={1600} height={1008} className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-hero-overlay" />
-        <div className="relative mx-auto max-w-6xl px-6 pb-24">
+        <ServiceSlideshow images={careImages} label="Calixa Care photos" />
+        <div className="pointer-events-none absolute inset-0 bg-hero-overlay" />
+        <div className="pointer-events-none relative mx-auto max-w-6xl px-6 pb-24 [&_nav]:pointer-events-auto [&_form]:pointer-events-auto">
           <SiteNav light />
           <div className="pt-16 text-secondary-foreground">
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Calixa Care</p>

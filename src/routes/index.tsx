@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Globe, ShieldCheck, Eye } from "lucide-react";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
-import hero from "@/assets/hero-estate.jpg";
-import buildImg from "@/assets/build-card.jpg";
-import careImg from "@/assets/calixa-care-hero.jpg";
+import { ServiceSlideshow } from "@/components/ServiceSlideshow";
+import { landingImages } from "@/components/service-images";
+import buildImg from "@/assets/calixa-build-branded-delivery.jpg";
+import careImg from "@/assets/calixa-care-team-branded.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,9 +29,9 @@ function Landing() {
   return (
     <main className="bg-background text-foreground">
       <section className="relative overflow-hidden">
-        <img src={hero} alt="Large housing estate under construction in Africa" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-hero-overlay" />
-        <div className="relative mx-auto max-w-6xl px-6 pb-20">
+        <ServiceSlideshow images={landingImages} label="CalixaHomes Build and Care photos" />
+        <div className="pointer-events-none absolute inset-0 bg-hero-overlay" />
+        <div className="pointer-events-none relative mx-auto max-w-6xl px-6 pb-20 [&_nav]:pointer-events-auto">
           <SiteNav light getStartedSource="landing_get_started" />
           <div className="pt-14 text-secondary-foreground">
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Welcome to CalixaHomes</p>

@@ -11,3 +11,4 @@
 
 - Load the About globe's Three.js engine inside a browser effect with the approved illustration as a loading/WebGL fallback; keep cyclic journey timing, camera focus and geographic interpolation in a browser-independent module so single-connection visibility and reset rules remain testable and SSR-safe.
 - The About globe supports a dev-only `?globeTime=<seconds>` frozen animation time for reproducible visual checks; its host exposes `data-scene-ready`, `data-rotation` (camera longitude), `data-journey`, `data-progress`, `data-visible-markers`, `data-visible-lines` and `data-camera-distance` to verify focus and decluttering.
+- Share service photo collections and the accessible background slideshow across landing, Build and Care pages; initialize browser motion preferences in effects to preserve SSR consistency.

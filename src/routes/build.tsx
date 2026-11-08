@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
 import { Headset, ShieldCheck, Truck, Camera, Eye, Globe, MapPin, ShoppingCart, UserCheck, CreditCard, HardHat, Check } from "lucide-react";
-import hero from "@/assets/hero-estate.jpg";
+import { ServiceSlideshow } from "@/components/ServiceSlideshow";
+import { buildImages } from "@/components/service-images";
 import delivery from "@/assets/calixa-build-branded-delivery.jpg";
-import site from "@/assets/hero-ghana-site.jpg";
+import site from "@/assets/calixa-build-foundations-branded.jpg";
 import { AppComingSoonDialog } from "@/components/AppComingSoonDialog";
 import { Button } from "@/components/ui/button";
 
@@ -57,9 +58,9 @@ function BuildPage() {
     <main className="bg-background text-foreground">
       {/* Hero */}
       <section className="relative min-h-screen overflow-hidden">
-        <img src={hero} alt="Large housing estate under construction in Africa" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-hero-overlay" />
-        <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-6">
+        <ServiceSlideshow images={buildImages} label="Calixa Build photos" controlsClassName="bottom-20" />
+        <div className="pointer-events-none absolute inset-0 bg-hero-overlay" />
+        <div className="pointer-events-none relative mx-auto flex min-h-screen max-w-6xl flex-col px-6 [&_nav]:pointer-events-auto [&_button]:pointer-events-auto">
           <SiteNav light getStartedSource="build_get_started" />
           <div className="flex flex-1 flex-col justify-center pb-24 text-secondary-foreground">
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Build The Calixa Way</p>
@@ -131,7 +132,7 @@ function BuildPage() {
           <p className="mt-4 text-lg text-muted-foreground">Every delivery and every milestone is logged with photos, so you always know what was delivered, what was used and what comes next.</p>
         </div>
         <div className="rounded-3xl bg-card p-6 shadow-glow">
-          <img src={site} alt="Two-storey house under construction" loading="lazy" width={1920} height={1088} className="h-48 w-full rounded-2xl object-cover" />
+          <img src={site} alt="CalixaHomes construction team building a reinforced house foundation" loading="lazy" width={1600} height={1008} className="h-48 w-full rounded-2xl object-cover" />
           <div className="mt-5 flex items-center justify-between"><h3 className="font-bold">East Legon Residence</h3><span className="rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground">54% complete</span></div>
           <ul className="mt-4 space-y-3">
             {stages.map((s) => (

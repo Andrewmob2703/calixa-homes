@@ -1,4 +1,7 @@
 # Cinematic globe
+- [x] Generate Build and Care photos and add service-specific and combined landing slideshows.
+- [x] Verify slideshow controls, automatic playback and mobile layouts.
+- [x] Add the CalixaHomes logo to all workers’ gear in Build and Care photos.
 - [x] Replace accumulating connections with isolated, repeating journeys.
 - [x] Follow each origin-to-Africa line with a smooth zooming camera and timed house arrival.
 - [x] Verify sequencing, reset and desktop/mobile rendering.
