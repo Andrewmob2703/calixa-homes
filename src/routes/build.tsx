@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
 import { Headset, ShieldCheck, Truck, Camera, Eye, Globe, MapPin, ShoppingCart, UserCheck, CreditCard, HardHat, Check } from "lucide-react";
 import hero from "@/assets/hero-estate.jpg";
-import delivery from "@/assets/delivery-truck.jpg";
+import delivery from "@/assets/calixa-build-material-delivery.jpg";
 import site from "@/assets/hero-ghana-site.jpg";
 
 export const Route = createFileRoute("/build")({
@@ -88,7 +88,7 @@ function BuildPage() {
       <section className="mx-auto max-w-6xl px-6 py-24">
         <h2 className="text-center text-4xl font-extrabold md:text-5xl">Why build with us</h2>
         <div className="mt-14 grid gap-10 md:grid-cols-2 md:items-center">
-          <img src={delivery} alt="Cement and iron rods delivered to a site" loading="lazy" width={1200} height={912} className="rounded-3xl object-cover" />
+          <img src={delivery} alt="Construction workers unloading cement and iron rods at a Ghanaian home building site" loading="lazy" width={1200} height={900} className="rounded-3xl object-cover" />
           <div className="grid gap-5">
             {benefits.map(({ icon: I, t, d }) => (
               <div key={t} className="flex gap-4 rounded-2xl bg-card p-5 shadow-sm">
