@@ -79,7 +79,6 @@ export function SiteFooter() {
           <ul className="mt-4 space-y-2 text-sm opacity-80">
             <li><Link to="/" className="hover:text-primary">Home</Link></li>
             {navLinks.map((l) => <li key={l.to}><Link to={l.to} className="hover:text-primary">{l.label}</Link></li>)}
-            <li><Link to="/privacy-policy" className="hover:text-primary">Privacy Policy</Link></li>
           </ul>
         </div>
         <div>
