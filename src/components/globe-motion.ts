@@ -9,11 +9,13 @@ export const globeUsers = [
   { country: "UAE", lat: 25.2, lon: 55.3 },
   { country: "China", lat: 31.2, lon: 121.5 },
 ];
+export const globeHousePalettes = ["clay", "sage", "sand", "sky"] as const;
+const houseDesign = (homes: 1 | 3, palette: typeof globeHousePalettes[number]) => ({ homes, palette });
 export const globeSites = [
-  { country: "Ghana", lat: 5.6, lon: -0.2 },
-  { country: "Nigeria", lat: 6.5, lon: 3.4 },
-  { country: "Kenya", lat: -1.3, lon: 36.8 },
-  { country: "South Africa", lat: -26.2, lon: 28 },
+  { country: "Ghana", lat: 5.6, lon: -0.2, design: houseDesign(1, "clay") },
+  { country: "Nigeria", lat: 6.5, lon: 3.4, design: houseDesign(3, "sand") },
+  { country: "Kenya", lat: -1.3, lon: 36.8, design: houseDesign(1, "sage") },
+  { country: "South Africa", lat: -26.2, lon: 28, design: houseDesign(3, "sky") },
 ];
 export const CYCLE_SECONDS = JOURNEY_SECONDS * globeUsers.length;
 function seededRandom(seed: number) {

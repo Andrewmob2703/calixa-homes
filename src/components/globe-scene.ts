@@ -3,7 +3,7 @@ import earthAsset from "@/assets/globe-earth.jpg.asset.json";
 import logoAsset from "@/assets/calixa-logo.jpg.asset.json";
 import userHeadshots from "@/assets/globe-user-headshots.jpg";
 import gulfAsiaHeadshots from "@/assets/globe-user-headshots-uae-china.jpg";
-import { arcDirection, geographicPoint, journeyFrame, globeUsers, globeSites } from "./globe-motion";
+import { arcDirection, geographicPoint, journeyFrame, globeUsers, globeSites, globeHousePalettes } from "./globe-motion";
 
 export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
   let disposed = false;
@@ -14,6 +14,12 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
   const ink = color("--globe-ink"), land = color("--globe-land");
   const sun = color("--globe-sun"), sky = color("--globe-sky");
   const roofColor = color("--globe-roof"), concreteColor = color("--globe-concrete");
+  const housePalettes = {
+    clay: { wall: color("--globe-house-clay"), roof: roofColor },
+    sage: { wall: color("--globe-house-sage"), roof: color("--globe-roof-slate") },
+    sand: { wall: color("--globe-house-sand"), roof: color("--globe-roof-cedar") },
+    sky: { wall: color("--globe-house-sky"), roof: color("--globe-roof-slate") },
+  };
   const renderer = new T.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.outputColorSpace = T.SRGBColorSpace;
@@ -50,7 +56,7 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
   const connections: { mesh: T.Mesh; pulse: T.Mesh; curve: T.CatmullRomCurve3; userIndex: number; siteIndex: number }[] = [];
   const markers: { sprite: T.Sprite; userIndex: number }[] = [];
   const constructionSites: {
-    group: T.Group; foundation: T.Group; walls: T.Group; roof: T.Group; siteIndex: number;
+    group: T.Group; homes: { foundation: T.Group; walls: T.Group; roof: T.Group }[]; siteIndex: number;
     materials: (T.MeshStandardMaterial | T.SpriteMaterial)[];
   }[] = [];
   const tethers: T.Line[] = [];
@@ -89,45 +95,61 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
       const tetherLine = new T.Line(tether, new T.LineBasicMaterial({ color: gold, transparent: true, opacity: .55 }));
       world.add(tetherLine); tethers.push(tetherLine);
     });
-    // Lightweight architectural meshes give each small site a real foundation-to-roof build.
+    // Each destination has its own colorful home or a small three-house estate.
     globeSites.forEach((site, siteIndex) => {
-      const group = new T.Group(), foundation = new T.Group(), walls = new T.Group(), roof = new T.Group();
+      const group = new T.Group();
+      const homes: { foundation: T.Group; walls: T.Group; roof: T.Group }[] = [];
       const materials: (T.MeshStandardMaterial | T.SpriteMaterial)[] = [];
       const material = (color: T.Color, roughness = .8) => {
         const value = new T.MeshStandardMaterial({ color, roughness, transparent: true });
         materials.push(value); return value;
       };
-      const concrete = material(concreteColor), plaster = material(light), roofTiles = material(roofColor, .65);
+      const concrete = material(concreteColor), slab = material(light);
       const dark = material(ink), glass = material(sky, .25);
       const box = (parent: T.Group, size: [number, number, number], position: [number, number, number], surface: T.MeshStandardMaterial) => {
         const mesh = new T.Mesh(new T.BoxGeometry(...size), surface);
         mesh.position.set(...position); parent.add(mesh); return mesh;
       };
-      box(foundation, [.25, .025, .19], [0, 0, 0], concrete);
-      box(foundation, [.22, .012, .16], [0, .018, 0], plaster);
-      box(walls, [.2, .11, .14], [0, .055, 0], plaster);
-      box(walls, [.035, .065, .006], [0, .034, .073], dark);
-      [-0.06, 0.06].forEach(x => box(walls, [.04, .035, .007], [x, .069, .074], glass));
-      [-0.035, 0.035].forEach(z => box(walls, [.007, .035, .035], [.103, .069, z], glass));
-      walls.position.y = .024;
-      const roofMesh = new T.Mesh(new T.ConeGeometry(.155, .08, 4), roofTiles);
-      roofMesh.rotation.y = Math.PI / 4; roofMesh.scale.z = .75; roofMesh.position.y = .04; roof.add(roofMesh);
-      box(roof, [.025, .06, .025], [.05, .065, 0], dark);
-      roof.position.y = .134;
+      // Estate homes form a shallow crescent so all three remain readable in the arrival close-up.
+      const layouts: [number, number, number][] = site.design.homes === 3
+        ? [[-.18, .03, .16], [0, -.14, 0], [.18, .03, -.16]]
+        : [[0, 0, 0]];
+      const sitePaletteIndex = Math.max(0, globeHousePalettes.indexOf(site.design.palette));
+      layouts.forEach(([x, z, turn], homeIndex) => {
+        const home = new T.Group(), foundation = new T.Group(), walls = new T.Group(), roof = new T.Group();
+        const paletteName = globeHousePalettes[(sitePaletteIndex + homeIndex) % globeHousePalettes.length] ?? "clay";
+        const palette = housePalettes[paletteName];
+        const plaster = material(palette.wall), roofTiles = material(palette.roof, .65);
+        box(foundation, [.25, .025, .19], [0, 0, 0], concrete);
+        box(foundation, [.22, .012, .16], [0, .018, 0], slab);
+        box(walls, [.2, .11, .14], [0, .055, 0], plaster);
+        box(walls, [.035, .065, .006], [0, .034, .073], dark);
+        [-0.06, 0.06].forEach(windowX => box(walls, [.04, .035, .007], [windowX, .069, .074], glass));
+        [-0.035, 0.035].forEach(windowZ => box(walls, [.007, .035, .035], [.103, .069, windowZ], glass));
+        walls.position.y = .024;
+        const roofMesh = new T.Mesh(new T.ConeGeometry(.155, .08, 4), roofTiles);
+        roofMesh.rotation.y = Math.PI / 4; roofMesh.scale.z = .75; roofMesh.position.y = .04; roof.add(roofMesh);
+        box(roof, [.025, .06, .025], [.05, .065, 0], dark);
+        roof.position.y = .134;
+        home.position.set(x, 0, z); home.rotation.y = turn;
+        home.scale.setScalar(site.design.homes === 3 ? .64 : 1);
+        home.add(foundation, walls, roof); group.add(home);
+        homes.push({ foundation, walls, roof });
+      });
       const label = document.createElement("canvas"); label.width = 256; label.height = 64;
       const c = label.getContext("2d");
       if (c) {
         c.fillStyle = ink.getStyle(); c.beginPath(); c.roundRect(3, 3, 250, 58, 14); c.fill();
         c.fillStyle = light.getStyle(); c.font = "600 25px Manrope, sans-serif"; c.textAlign = "center"; c.fillText(site.country, 128, 41);
         const labelMaterial = new T.SpriteMaterial({ map: drawTexture(label), transparent: true, depthTest: false, depthWrite: false, toneMapped: false });
-        const labelSprite = new T.Sprite(labelMaterial); labelSprite.position.set(0, .06, -.17); labelSprite.scale.set(.16, .04, 1);
+        const labelSprite = new T.Sprite(labelMaterial);
+        labelSprite.position.set(0, .06, site.design.homes === 3 ? -.29 : -.17); labelSprite.scale.set(.16, .04, 1);
         materials.push(labelMaterial); group.add(labelSprite);
       }
-      group.add(foundation, walls, roof);
       const position = point(site.lat, site.lon, 1.055);
       group.position.copy(position); group.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), position.clone().normalize());
-      group.scale.setScalar(.58); group.visible = false; world.add(group);
-      constructionSites.push({ group, foundation, walls, roof, siteIndex, materials });
+      group.scale.setScalar(site.design.homes === 3 ? .52 : .58); group.visible = false; world.add(group);
+      constructionSites.push({ group, homes, siteIndex, materials });
     });
     globeUsers.forEach((user, userIndex) => {
       globeSites.forEach((site, siteIndex) => {
@@ -163,17 +185,22 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
         sprite.material.opacity = opacity;
         sprite.visible = opacity > 0;
       });
-      constructionSites.forEach(({ group, foundation, walls, roof, siteIndex, materials }) => {
+      constructionSites.forEach(({ group, homes, siteIndex, materials }) => {
         const active = siteIndex === journey.siteIndex && journey.house > 0;
         group.visible = active;
         if (!active) return;
-        const foundationProgress = Math.min(1, journey.construction / .22);
-        const wallProgress = T.MathUtils.smoothstep(journey.construction, .15, .78);
-        const roofProgress = T.MathUtils.smoothstep(journey.construction, .72, 1);
-        foundation.scale.set(foundationProgress, 1, foundationProgress);
-        walls.visible = wallProgress > .001; walls.scale.y = Math.max(.001, wallProgress);
-        roof.visible = roofProgress > .001; roof.scale.setScalar(Math.max(.001, roofProgress));
-        roof.position.y = .134 + .1 * (1 - roofProgress);
+        homes.forEach(({ foundation, walls, roof }, homeIndex) => {
+          // Estate homes rise in a quick sequence rather than popping up as one block.
+          const stagger = homes.length === 1 ? 0 : homeIndex * .1;
+          const homeProgress = T.MathUtils.clamp((journey.construction - stagger) / (1 - (homes.length - 1) * .1), 0, 1);
+          const foundationProgress = Math.min(1, homeProgress / .22);
+          const wallProgress = T.MathUtils.smoothstep(homeProgress, .15, .78);
+          const roofProgress = T.MathUtils.smoothstep(homeProgress, .72, 1);
+          foundation.scale.set(foundationProgress, 1, foundationProgress);
+          walls.visible = wallProgress > .001; walls.scale.y = Math.max(.001, wallProgress);
+          roof.visible = roofProgress > .001; roof.scale.setScalar(Math.max(.001, roofProgress));
+          roof.position.y = .134 + .1 * (1 - roofProgress);
+        });
         materials.forEach(material => { material.opacity = journey.house; });
       });
       tethers.forEach((line, index) => {
