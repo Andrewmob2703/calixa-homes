@@ -13,3 +13,4 @@
 - The About globe supports a dev-only `?globeTime=<seconds>` frozen animation time for reproducible visual checks; its host exposes `data-scene-ready`, `data-rotation` (camera longitude), `data-journey`, `data-progress`, `data-visible-markers`, `data-visible-lines` and `data-camera-distance` to verify focus and decluttering.
 - Share service photo collections and the accessible background slideshow across landing, Build and Care pages; initialize browser motion preferences in effects to preserve SSR consistency.
 - Keep the Care service catalog in a shared browser-safe module used by the service grid and booking selector so offering changes remain testable.
+- Keep public waitlist inserts limited to email and supported signup sources, with database-side email validation; visitors must not supply record IDs or timestamps because those are server-generated.
