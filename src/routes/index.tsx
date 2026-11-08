@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Globe, ShieldCheck, Eye } from "lucide-react";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
 import { ServiceSlideshow } from "@/components/ServiceSlideshow";
+import DiasporaGlobe from "@/components/DiasporaGlobe";
 import { landingImages } from "@/components/service-images";
 import buildImg from "@/assets/calixa-build-branded-delivery.jpg";
 import careImg from "@/assets/calixa-care-plumbing.jpg";
@@ -56,6 +57,13 @@ function Landing() {
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      <section className="bg-secondary py-12 text-secondary-foreground" aria-label="CalixaHomes around the world">
+        <div className="mx-auto max-w-6xl px-6">
+          <DiasporaGlobe />
+          <p className="mx-auto max-w-xl pt-6 text-center text-lg">Wherever you are in the world, CalixaHomes reaches your building site back home.</p>
         </div>
       </section>
 
