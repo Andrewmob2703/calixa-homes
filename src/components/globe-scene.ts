@@ -11,6 +11,7 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
   const styles = getComputedStyle(element);
   const color = (name: string) => new T.Color(styles.getPropertyValue(name).trim());
   const gold = color("--globe-gold"), light = color("--globe-light");
+  const routeColor = color("--globe-route");
   const ink = color("--globe-ink"), land = color("--globe-land");
   const sun = color("--globe-sun"), sky = color("--globe-sky");
   const roofColor = color("--globe-roof"), concreteColor = color("--globe-concrete");
@@ -53,7 +54,7 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
   };
   const observer = new ResizeObserver(resize); observer.observe(element); resize();
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  const connections: { mesh: T.Mesh; pulse: T.Mesh; curve: T.CatmullRomCurve3; userIndex: number; siteIndex: number }[] = [];
+  const connections: { mesh: T.Line; pulse: T.Mesh; curve: T.CatmullRomCurve3; userIndex: number; siteIndex: number }[] = [];
   const markers: { sprite: T.Sprite; userIndex: number }[] = [];
   const constructionSites: {
     group: T.Group; homes: { foundation: T.Group; walls: T.Group; roof: T.Group }[]; siteIndex: number;
@@ -160,9 +161,13 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
           return new T.Vector3(p.x, p.y, p.z).multiplyScalar(1.025 + Math.sin(t * Math.PI) * .09 + t * .075);
         });
         const curve = new T.CatmullRomCurve3(points);
-        const connection = new T.Mesh(new T.TubeGeometry(curve, 64, .0035, 5, false), new T.MeshBasicMaterial({ color: gold, transparent: true }));
+        const connection = new T.Line(
+          new T.BufferGeometry().setFromPoints(curve.getPoints(64)),
+          new T.LineDashedMaterial({ color: routeColor, transparent: true, opacity: .55, dashSize: .035, gapSize: .022, depthWrite: false }),
+        );
+        connection.computeLineDistances();
         world.add(connection);
-        const mesh = new T.Mesh(new T.SphereGeometry(.014, 8, 8), new T.MeshBasicMaterial({ color: light }));
+        const mesh = new T.Mesh(new T.SphereGeometry(.014, 8, 8), new T.MeshBasicMaterial({ color: routeColor, transparent: true, opacity: .8 }));
         world.add(mesh); connections.push({ mesh: connection, pulse: mesh, curve, userIndex, siteIndex });
       });
     });
@@ -210,9 +215,9 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
       connections.forEach(({ mesh, pulse, curve, userIndex, siteIndex }) => {
         const active = userIndex === journey.index && siteIndex === journey.siteIndex && journey.line > 0;
         mesh.visible = active;
-        (mesh.material as T.MeshBasicMaterial).opacity = journey.line;
-        const first = 0, last = Math.floor(journey.progress * 64);
-        mesh.geometry.setDrawRange(first * 30, Math.max(0, last - first) * 30);
+        (mesh.material as T.LineDashedMaterial).opacity = .55 * journey.line;
+        const last = Math.floor(journey.progress * 64);
+        mesh.geometry.setDrawRange(0, last + 1);
         pulse.visible = active && journey.progress > 0 && journey.progress < 1;
         pulse.position.copy(curve.getPoint(journey.progress));
       });
