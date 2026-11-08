@@ -15,7 +15,7 @@ export default function DiasporaGlobe() {
     return () => { disposed = true; cleanup?.(); };
   }, []);
   return (
-    <div className="relative aspect-[3/2] max-h-[42rem] w-full overflow-hidden" role="img" aria-label="Cinematic journeys across a natural blue Earth, following one CalixaHomes user at a time from the USA, Canada, UK, France, Germany and Australia to a home construction site in Africa">
+    <div className="relative aspect-[3/2] max-h-[42rem] w-full overflow-hidden" role="img" aria-label="Cinematic journeys across a natural blue Earth, following one CalixaHomes user at a time from the USA, Canada, UK, France, Germany, Australia, UAE and China to a home construction site in Africa">
       <img
         src={globePoster.url}
         alt=""

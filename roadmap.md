@@ -2,3 +2,8 @@
 - [x] Replace accumulating connections with isolated, repeating journeys.
 - [x] Follow each origin-to-Africa line with a smooth zooming camera and timed house arrival.
 - [x] Verify sequencing, reset and desktop/mobile rendering.
+- [x] Add UAE and China face-and-phone markers.
+- [x] Keep each complete origin-to-Africa line visible until arrival, then clear it with its markers.
+- [x] Shuffle origin and destination pairings on every cycle and verify all countries appear once.
+- [x] Replace flat house markers with realistic miniature construction models.
+- [x] Animate each house from foundation to walls and roof after its connection arrives.
