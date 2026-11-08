@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import globeLoading from "@/assets/globe-loading.webp";
 
 export default function DiasporaGlobe() {
   const host = useRef<HTMLDivElement>(null);
@@ -17,13 +18,8 @@ export default function DiasporaGlobe() {
   return (
     <div className="relative aspect-[3/2] max-h-[42rem] w-full overflow-hidden" role="img" aria-label="Cinematic journeys across a natural blue Earth, following one CalixaHomes user at a time from the USA, Canada, UK, France, Germany, Australia, UAE and China to a home construction site in Africa">
       <div ref={host} className={`globe-canvas absolute inset-0 transition-opacity ${status === "ready" ? "opacity-100" : "opacity-0"}`} />
-      {status === "loading" && (
-        <div className="absolute inset-0 grid place-items-center" aria-hidden="true">
-          <div className="flex flex-col items-center gap-4">
-            <span className="h-12 w-12 animate-spin rounded-full border-2 border-primary/25 border-t-primary" />
-            <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">Loading the globe</p>
-          </div>
-        </div>
+      {status !== "unavailable" && (
+        <img src={globeLoading} alt="" aria-hidden="true" className={`absolute inset-0 h-full w-full object-contain transition-opacity ${status === "ready" ? "opacity-0" : "opacity-100"}`} />
       )}
       {status === "unavailable" && (
         <div className="absolute inset-0 grid place-items-center px-8 text-center">
