@@ -20,6 +20,11 @@ const navLinks = [
   { to: "/contact", label: "Contact Us" },
 ] as const;
 
+const headerLinks = [
+  { to: "/", label: "Home" },
+  ...navLinks.filter((link) => link.to !== "/build" && link.to !== "/care"),
+] as const;
+
 export function Logo({ size = 44 }: { size?: number }) {
   return (
     <Link to="/" className="flex items-center gap-3">
@@ -34,7 +39,7 @@ export function SiteNav({ light = false, getStartedSource }: { light?: boolean; 
     <nav className={`flex flex-wrap items-center justify-between gap-4 py-6 ${light ? "text-secondary-foreground" : "text-foreground"}`}>
       <Logo />
       <div className="flex items-center gap-5 text-sm font-semibold">
-        {navLinks.map((l) => (
+        {headerLinks.map((l) => (
           <Link key={l.to} to={l.to} className="hidden opacity-90 hover:text-primary sm:inline" activeProps={{ className: "text-primary" }}>{l.label}</Link>
         ))}
         {getStartedSource ? (
