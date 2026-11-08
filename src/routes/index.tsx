@@ -31,7 +31,7 @@ function Landing() {
         <img src={hero} alt="Large housing estate under construction in Africa" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-hero-overlay" />
         <div className="relative mx-auto max-w-6xl px-6 pb-20">
-          <SiteNav light />
+          <SiteNav light getStartedSource="landing_get_started" />
           <div className="pt-14 text-secondary-foreground">
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Welcome to CalixaHomes</p>
             <h1 className="max-w-3xl text-5xl font-extrabold leading-[1.05] md:text-7xl">Your home back home, handled.</h1>
