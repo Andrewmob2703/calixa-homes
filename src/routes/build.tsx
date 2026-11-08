@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
 import { Headset, ShieldCheck, Truck, Camera, Eye, Globe, MapPin, ShoppingCart, UserCheck, CreditCard, HardHat, Check } from "lucide-react";
 import hero from "@/assets/hero-estate.jpg";
-import delivery from "@/assets/calixa-build-material-delivery.jpg";
+import delivery from "@/assets/calixa-build-branded-delivery.jpg";
 import site from "@/assets/hero-ghana-site.jpg";
 
 export const Route = createFileRoute("/build")({
