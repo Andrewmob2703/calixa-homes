@@ -6,12 +6,12 @@ describe("Cinematic About globe journeys", () => {
     expect(globeUsers.map(user => user.country)).toEqual(["USA", "Canada", "UK", "France", "Germany", "Australia", "UAE", "China"]);
   });
   it("mixes single homes with three-house estates at the African destinations", () => {
-    expect(globeSites.map(site => site.design.homes)).toEqual([1, 3, 1, 3]);
+    expect(globeSites.map(site => site.design.homes)).toEqual([1, 3, 1, 3, 1, 3]);
   });
   it("gives the single homes different color palettes", () => {
     const singleHomePalettes = globeSites.filter(site => site.design.homes === 1).map(site => site.design.palette);
-    expect(singleHomePalettes).toEqual(["clay", "sage"]);
-    expect(new Set(singleHomePalettes).size).toBe(2);
+    expect(singleHomePalettes).toEqual(["clay", "sage", "sky"]);
+    expect(new Set(singleHomePalettes).size).toBe(3);
   });
   it("shuffles every origin and African destination pairing on each cycle", () => {
     const orders = Array.from({ length: 12 }, (_, cycle) => journeyOrder(cycle));

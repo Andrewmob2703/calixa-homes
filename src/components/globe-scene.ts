@@ -141,10 +141,10 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
       const c = label.getContext("2d");
       if (c) {
         c.fillStyle = ink.getStyle(); c.beginPath(); c.roundRect(3, 3, 250, 58, 14); c.fill();
-        c.fillStyle = light.getStyle(); c.font = "600 25px Manrope, sans-serif"; c.textAlign = "center"; c.fillText(site.country, 128, 41);
+        c.fillStyle = light.getStyle(); c.font = "800 38px Manrope, sans-serif"; c.textAlign = "center"; c.fillText(site.country, 128, 46);
         const labelMaterial = new T.SpriteMaterial({ map: drawTexture(label), transparent: true, depthTest: false, depthWrite: false, toneMapped: false });
         const labelSprite = new T.Sprite(labelMaterial);
-        labelSprite.position.set(0, .06, site.design.homes === 3 ? -.29 : -.17); labelSprite.scale.set(.16, .04, 1);
+        labelSprite.position.set(0, .06, site.design.homes === 3 ? -.29 : -.17); labelSprite.scale.set(.24, .06, 1);
         materials.push(labelMaterial); group.add(labelSprite);
       }
       const position = point(site.lat, site.lon, 1.055);

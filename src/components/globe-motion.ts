@@ -16,6 +16,8 @@ export const globeSites = [
   { country: "Nigeria", lat: 6.5, lon: 3.4, design: houseDesign(3, "sand") },
   { country: "Kenya", lat: -1.3, lon: 36.8, design: houseDesign(1, "sage") },
   { country: "South Africa", lat: -26.2, lon: 28, design: houseDesign(3, "sky") },
+  { country: "Senegal", lat: 14.7, lon: -17.4, design: houseDesign(1, "sky") },
+  { country: "Uganda", lat: 0.35, lon: 32.6, design: houseDesign(3, "clay") },
 ];
 export const CYCLE_SECONDS = JOURNEY_SECONDS * globeUsers.length;
 function seededRandom(seed: number) {
