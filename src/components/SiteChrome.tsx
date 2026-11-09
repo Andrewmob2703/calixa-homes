@@ -59,6 +59,13 @@ function WhatsAppIcon({ className }: { className?: string }) {
   return <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.7-.4Z" /></svg>;
 }
 
+function AppleIcon({ className }: { className?: string }) {
+  return <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7a4.6 4.6 0 0 0-3.6-2c-1.5-.2-3 .9-3.7.9-.8 0-2-.9-3.2-.8A4.8 4.8 0 0 0 4 9.4c-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.2.8c1.3 0 2.1-1.2 2.9-2.4a10 10 0 0 0 1.3-2.7 4.2 4.2 0 0 1-2.3-3.9ZM14 5.4A4.3 4.3 0 0 0 15 2a4.4 4.4 0 0 0-2.9 1.5 4.1 4.1 0 0 0-1 3.2A3.6 3.6 0 0 0 14 5.4Z" /></svg>;
+}
+function PlayIcon({ className }: { className?: string }) {
+  return <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden><path d="M3.6 2.2 13.4 12l-9.8 9.8a1.5 1.5 0 0 1-.6-1.2V3.4c0-.5.2-.9.6-1.2Zm11 8.6 2.6-2.6L5.3 1.5l9.3 9.3Zm0 2.4-9.3 9.3 11.9-6.7-2.6-2.6Zm3.9-4.3-2.9 3.1 2.9 3.1 2.9-1.6c.8-.5.8-1.6 0-2.1l-2.9-1.5Z" /></svg>;
+}
+
 export function SiteFooter() {
   const social = "grid h-10 w-10 place-items-center rounded-full bg-secondary-foreground/10 hover:bg-primary hover:text-primary-foreground transition-colors";
   return (
@@ -72,6 +79,19 @@ export function SiteFooter() {
             <a href={SOCIALS.x} target="_blank" rel="noreferrer" aria-label="CalixaHomes on X" className={social}><XIcon className="h-4 w-4" /></a>
             <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" aria-label="CalixaHomes on Instagram" className={social}><Instagram className="h-5 w-5" /></a>
             <a href={SOCIALS.whatsapp} target="_blank" rel="noreferrer" aria-label="Chat with CalixaHomes on WhatsApp" className={social}><WhatsAppIcon className="h-5 w-5" /></a>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-3">
+            {[
+              { label: "App Store", top: "Download on the", icon: <AppleIcon className="h-6 w-6" /> },
+              { label: "Google Play", top: "Get it on", icon: <PlayIcon className="h-5 w-5" /> },
+            ].map((store) => (
+              <AppComingSoonDialog key={store.label} source="landing_get_started" description="The CalixaHomes mobile app is in development and will be on the App Store and Google Play soon.">
+                <button type="button" aria-label={`CalixaHomes on ${store.label} (coming soon)`} className="flex items-center gap-2 rounded-xl border border-secondary-foreground/25 bg-secondary-foreground/5 px-4 py-2 text-left transition-colors hover:border-primary hover:text-primary">
+                  {store.icon}
+                  <span className="leading-tight"><span className="block text-[10px] opacity-75">{store.top}</span><span className="block text-sm font-bold">{store.label}</span></span>
+                </button>
+              </AppComingSoonDialog>
+            ))}
           </div>
         </div>
         <div>

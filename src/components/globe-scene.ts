@@ -163,7 +163,7 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
         const curve = new T.CatmullRomCurve3(points);
         const connection = new T.Line(
           new T.BufferGeometry().setFromPoints(curve.getPoints(64)),
-          new T.LineDashedMaterial({ color: routeColor, transparent: true, opacity: .55, dashSize: .035, gapSize: .022, depthWrite: false }),
+          new T.LineDashedMaterial({ color: routeColor, transparent: true, opacity: 1, dashSize: .035, gapSize: .022, depthWrite: false }),
         );
         connection.computeLineDistances();
         world.add(connection);
@@ -215,7 +215,7 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
       connections.forEach(({ mesh, pulse, curve, userIndex, siteIndex }) => {
         const active = userIndex === journey.index && siteIndex === journey.siteIndex && journey.line > 0;
         mesh.visible = active;
-        (mesh.material as T.LineDashedMaterial).opacity = .55 * journey.line;
+        (mesh.material as T.LineDashedMaterial).opacity = journey.line;
         const last = Math.floor(journey.progress * 64);
         mesh.geometry.setDrawRange(0, last + 1);
         pulse.visible = active && journey.progress > 0 && journey.progress < 1;
