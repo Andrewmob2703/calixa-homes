@@ -3,6 +3,7 @@ import buildFoundations from "@/assets/calixa-build-foundations-branded.jpg";
 import buildCompleted from "@/assets/calixa-build-completed-homes-branded.jpg";
 import carePlumbing from "@/assets/calixa-care-plumbing.jpg";
 import careMaintenance from "@/assets/calixa-care-home-maintenance-branded.jpg";
+import heroGhanaSite from "@/assets/hero-ghana-site.jpg";
 import buildBlockwork from "@/assets/calixa-build-blockwork-branded.jpg";
 import buildYard from "@/assets/calixa-build-materials-yard-branded.jpg";
 import carePainting from "@/assets/calixa-care-painting-branded.jpg";
@@ -25,7 +26,7 @@ export const careImages = [
   { src: careRoof, alt: "CalixaHomes technician repairing a home's metal roof" },
 ];
 
-export const landingImages = buildImages.flatMap((image, index) => {
+export const landingImages = [{ src: heroGhanaSite, alt: "Two-storey home under construction in Accra, Ghana" }, ...buildImages.flatMap((image, index) => {
   const care = careImages[index];
   return care ? [image, care] : [image];
-});
+})];
