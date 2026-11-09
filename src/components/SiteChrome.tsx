@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Mail, Phone } from "lucide-react";
+import { Instagram, Lock } from "lucide-react";
 import logo from "@/assets/calixa-logo.jpg.asset.json";
 import { AppComingSoonDialog } from "@/components/AppComingSoonDialog";
 import { Button } from "@/components/ui/button";
@@ -75,11 +75,6 @@ export function SiteFooter() {
           <Logo size={56} />
           <p className="mt-4 font-display text-lg font-semibold text-primary">Build The Calixa Way</p>
           <p className="mt-2 max-w-sm text-sm opacity-75">Order building materials, get them delivered to your site and follow your construction from anywhere in the world.</p>
-          <div className="mt-6 flex gap-3">
-            <a href={SOCIALS.x} target="_blank" rel="noreferrer" aria-label="CalixaHomes on X" className={social}><XIcon className="h-4 w-4" /></a>
-            <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" aria-label="CalixaHomes on Instagram" className={social}><Instagram className="h-5 w-5" /></a>
-            <a href={SOCIALS.whatsapp} target="_blank" rel="noreferrer" aria-label="Chat with CalixaHomes on WhatsApp" className={social}><WhatsAppIcon className="h-5 w-5" /></a>
-          </div>
           <div className="mt-6 flex flex-wrap gap-3">
             {[
               { label: "App Store", top: "Download on the", icon: <AppleIcon className="h-6 w-6" /> },
@@ -93,6 +88,11 @@ export function SiteFooter() {
               </AppComingSoonDialog>
             ))}
           </div>
+          <div className="mt-6 flex gap-3">
+            <a href={SOCIALS.x} target="_blank" rel="noreferrer" aria-label="CalixaHomes on X" className={social}><XIcon className="h-4 w-4" /></a>
+            <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" aria-label="CalixaHomes on Instagram" className={social}><Instagram className="h-5 w-5" /></a>
+            <a href={SOCIALS.whatsapp} target="_blank" rel="noreferrer" aria-label="Chat with CalixaHomes on WhatsApp" className={social}><WhatsAppIcon className="h-5 w-5" /></a>
+          </div>
         </div>
         <div>
           <h4 className="font-display font-bold">Company</h4>
@@ -102,11 +102,13 @@ export function SiteFooter() {
           </ul>
         </div>
         <div>
-          <h4 className="font-display font-bold">Get in touch</h4>
-          <ul className="mt-4 space-y-3 text-sm opacity-80">
-            <li><a href={`mailto:${SUPPORT_EMAIL}`} className="flex items-center gap-2 hover:text-primary"><Mail className="h-4 w-4" />{SUPPORT_EMAIL}</a></li>
-            <li><a href="tel:+19253846734" className="flex items-center gap-2 hover:text-primary"><Phone className="h-4 w-4" />{SUPPORT_PHONE}</a></li>
-          </ul>
+          <h4 className="font-display font-bold">Pay securely with</h4>
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            {["VISA", "Mastercard", "Amex", "Apple Pay", "Google Pay", "Klarna"].map((m) => (
+              <span key={m} className="grid h-9 place-items-center rounded-md bg-card px-2 text-center text-[11px] font-extrabold tracking-tight text-card-foreground">{m}</span>
+            ))}
+          </div>
+          <p className="mt-4 flex items-center gap-2 text-xs opacity-75"><Lock className="h-3.5 w-3.5" />Encrypted, secure checkout</p>
         </div>
       </div>
       <div className="border-t border-secondary-foreground/15 py-6 text-center text-xs opacity-60">© 2026 CalixaHomes. Building homes across Africa.</div>
