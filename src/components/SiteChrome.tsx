@@ -96,13 +96,6 @@ export function SiteFooter() {
           </div>
         </div>
         <div>
-          <h4 className="font-display font-bold">Company</h4>
-          <ul className="mt-4 space-y-2 text-sm opacity-80">
-            <li><Link to="/" className="hover:text-primary">Home</Link></li>
-            {navLinks.map((l) => <li key={l.to}><Link to={l.to} className="hover:text-primary">{l.label}</Link></li>)}
-          </ul>
-        </div>
-        <div>
           <h4 className="font-display font-bold">Pay securely with</h4>
           <div className="mt-4 grid grid-cols-3 gap-2">
             {[siVisa, siMastercard, siAmericanexpress, siApplepay, siGooglepay, siKlarna].map((icon) => (
@@ -112,6 +105,13 @@ export function SiteFooter() {
             ))}
           </div>
           <p className="mt-4 flex items-center gap-2 text-xs opacity-75"><Lock className="h-3.5 w-3.5" />Encrypted, secure checkout</p>
+        </div>
+        <div>
+          <h4 className="font-display font-bold">Company</h4>
+          <ul className="mt-4 space-y-2 text-sm opacity-80">
+            <li><Link to="/" className="hover:text-primary">Home</Link></li>
+            {navLinks.map((l) => <li key={l.to}><Link to={l.to} className="hover:text-primary">{l.label}</Link></li>)}
+          </ul>
         </div>
       </div>
       <div className="border-t border-secondary-foreground/15 py-6 text-center text-xs opacity-60">© 2026 CalixaHomes. Building homes across Africa.</div>
