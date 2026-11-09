@@ -172,13 +172,15 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
       });
     });
     const start = performance.now();
+    // Each visit gets its own random pairings; frozen visual checks stay reproducible.
     const frozenTime = import.meta.env.DEV ? new URLSearchParams(location.search).get("globeTime") : null;
+    const sessionSeed = frozenTime === null ? Math.floor(Math.random() * 100000) + 1 : 0;
     const timeOverride = frozenTime !== null && Number.isFinite(Number(frozenTime)) ? Math.max(0, Number(frozenTime)) : undefined;
     const focus = new T.Vector3(), side = new T.Vector3(), worldUp = new T.Vector3(0, 1, 0);
     const render = () => {
       if (disposed) return;
       const seconds = timeOverride ?? (performance.now() - start) / 1000;
-      const journey = journeyFrame(seconds, reduced.matches);
+      const journey = journeyFrame(seconds, reduced.matches, sessionSeed);
       focus.set(journey.focus.x, journey.focus.y, journey.focus.z);
       side.crossVectors(focus, worldUp).normalize();
       camera.position.copy(focus).multiplyScalar(journey.distance).addScaledVector(side, .75 * journey.house);

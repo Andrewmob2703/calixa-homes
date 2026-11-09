@@ -38,8 +38,8 @@ function shuffledIndices(length: number, random: () => number) {
   return indices;
 }
 // A seeded shuffle keeps frozen-time checks reproducible while every cycle gets new pairings.
-export function journeyOrder(cycle: number) {
-  const random = seededRandom(cycle);
+export function journeyOrder(cycle: number, seed = 0) {
+  const random = seededRandom(cycle + seed * 7919);
   const users = shuffledIndices(globeUsers.length, random);
   const sites = shuffledIndices(globeSites.length, random);
   return users.map((userIndex, position) => ({ userIndex, siteIndex: sites[position % sites.length] ?? 0 }));
@@ -57,15 +57,15 @@ export function arcDirection(from: ReturnType<typeof geographicPoint>, to: Retur
   const a = Math.sin((1 - t) * angle) / Math.sin(angle), b = Math.sin(t * angle) / Math.sin(angle);
   return { x: from.x * a + to.x * b, y: from.y * a + to.y * b, z: from.z * a + to.z * b };
 }
-export function journeyFrame(seconds: number, reducedMotion = false) {
+export function journeyFrame(seconds: number, reducedMotion = false, seed = 0) {
   const time = Math.max(0, seconds);
   const cycle = reducedMotion ? 0 : Math.floor(time / CYCLE_SECONDS);
   const cycleTime = reducedMotion ? 10 : time % CYCLE_SECONDS;
   const position = Math.floor(cycleTime / JOURNEY_SECONDS);
   const local = cycleTime % JOURNEY_SECONDS;
-  const order = journeyOrder(cycle);
+  const order = journeyOrder(cycle, seed);
   const journey = order[position] ?? order[0];
-  const nextJourney = order[position + 1] ?? journeyOrder(cycle + 1)[0];
+  const nextJourney = order[position + 1] ?? journeyOrder(cycle + 1, seed)[0];
   const user = globeUsers[journey?.userIndex ?? 0] ?? globeUsers[0];
   const siteIndex = journey?.siteIndex ?? 0;
   const site = globeSites[siteIndex] ?? globeSites[0];

@@ -101,4 +101,8 @@ describe("Cinematic About globe journeys", () => {
       expect(Math.hypot(point.x, point.y, point.z)).toBeCloseTo(1);
     }
   });
+  it("gives each visit its own random pairings", () => {
+    const visits = [1, 2, 3, 4, 5].map(seed => JSON.stringify(journeyOrder(0, seed)));
+    expect(new Set(visits).size).toBeGreaterThan(1);
+  });
 });
