@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Lock } from "lucide-react";
+import { siVisa, siMastercard, siAmericanexpress, siApplepay, siGooglepay, siKlarna } from "simple-icons";
 import logo from "@/assets/calixa-logo.jpg.asset.json";
 import { AppComingSoonDialog } from "@/components/AppComingSoonDialog";
 import { Button } from "@/components/ui/button";
@@ -104,8 +105,10 @@ export function SiteFooter() {
         <div>
           <h4 className="font-display font-bold">Pay securely with</h4>
           <div className="mt-4 grid grid-cols-3 gap-2">
-            {["VISA", "Mastercard", "Amex", "Apple Pay", "Google Pay", "Klarna"].map((m) => (
-              <span key={m} className="grid h-9 place-items-center rounded-md bg-card px-2 text-center text-[11px] font-extrabold tracking-tight text-card-foreground">{m}</span>
+            {[siVisa, siMastercard, siAmericanexpress, siApplepay, siGooglepay, siKlarna].map((icon) => (
+              <span key={icon.slug} title={icon.title} className="grid h-10 place-items-center rounded-md bg-card px-2" style={icon.slug === "klarna" ? { backgroundColor: `#${icon.hex}` } : undefined}>
+                <svg role="img" aria-label={icon.title} viewBox="0 0 24 24" className="h-6 w-auto max-w-full" fill={icon.slug === "klarna" || icon.slug === "applepay" ? "#000000" : `#${icon.hex}`}><path d={icon.path} /></svg>
+              </span>
             ))}
           </div>
           <p className="mt-4 flex items-center gap-2 text-xs opacity-75"><Lock className="h-3.5 w-3.5" />Encrypted, secure checkout</p>
