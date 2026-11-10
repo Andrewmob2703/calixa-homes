@@ -61,22 +61,6 @@ function Landing() {
         </div>
       </section>
 
-      <section id="get-the-app" className="scroll-mt-6 border-t border-border bg-muted py-16">
-        <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-primary">Coming soon</p>
-          <h2 className="mt-3 text-3xl font-extrabold md:text-4xl">Get the CalixaHomes app</h2>
-          <p className="mx-auto mt-4 max-w-xl text-muted-foreground">Order materials, book house pros and follow your project from your phone. Tap a store below to be told the day it launches — or contact us to start today.</p>
-          <AppStoreBadges className="mt-8 justify-center" source="landing_app_store" />
-        </div>
-      </section>
-
-      <section className="bg-secondary py-12 text-secondary-foreground" aria-label="CalixaHomes around the world">
-        <div className="mx-auto max-w-6xl px-6">
-          <DiasporaGlobe />
-          <p className="mx-auto max-w-xl pt-6 text-center text-lg">Wherever you are in the world, CalixaHomes reaches your building site back home.</p>
-        </div>
-      </section>
-
       <section className="bg-muted py-16">
         <div className="mx-auto grid max-w-6xl gap-6 px-6 md:grid-cols-3">
           {[
@@ -92,6 +76,23 @@ function Landing() {
           ))}
         </div>
       </section>
+
+      <section id="get-the-app" className="scroll-mt-6 border-t border-border bg-muted py-16">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">Coming soon</p>
+          <h2 className="mt-3 text-3xl font-extrabold md:text-4xl">Get the CalixaHomes app</h2>
+          <p className="mx-auto mt-4 max-w-xl text-muted-foreground">Order materials, book house pros and follow your project from your phone. Tap a store below to be told the day it launches — or contact us to start today.</p>
+          <AppStoreBadges className="mt-8 justify-center" source="landing_app_store" />
+        </div>
+      </section>
+
+      <section className="night-sky py-12 text-secondary-foreground" aria-label="CalixaHomes around the world">
+        <div className="mx-auto max-w-6xl px-6">
+          <DiasporaGlobe />
+          <p className="mx-auto max-w-xl pt-6 text-center text-lg">Wherever you are in the world, CalixaHomes reaches your building site back home.</p>
+        </div>
+      </section>
+
       <SiteFooter />
     </main>
   );

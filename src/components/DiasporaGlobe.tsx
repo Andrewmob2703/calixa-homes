@@ -24,7 +24,7 @@ export default function DiasporaGlobe() {
     return () => { disposed = true; cleanup?.(); };
   }, []);
   return (
-    <div className="relative aspect-[3/2] max-h-[42rem] w-full overflow-hidden rounded-3xl bg-[radial-gradient(ellipse_at_center,#0b1e3a_0%,#050d1d_70%,#02060f_100%)]" role="img" aria-label="Cinematic journeys across a natural blue Earth, following one CalixaHomes user at a time from the USA, Canada, UK, France, Germany, Australia, UAE and China to a home construction site in Africa">
+    <div className="relative aspect-[3/2] max-h-[42rem] w-full overflow-hidden" role="img" aria-label="Cinematic journeys across a natural blue Earth, following one CalixaHomes user at a time from the USA, Canada, UK, France, Germany, Australia, UAE and China to a home construction site in Africa">
       <div aria-hidden="true" className="absolute inset-0">
         {stars.map((star, i) => (
           <span key={i} className="absolute rounded-full bg-white" style={{ left: `${star.x}%`, top: `${star.y}%`, width: star.size, height: star.size, opacity: star.opacity }} />

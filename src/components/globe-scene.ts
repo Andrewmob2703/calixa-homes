@@ -68,6 +68,8 @@ export function mountGlobe(element: HTMLDivElement, onReady: () => void) {
     map.colorSpace = T.SRGBColorSpace;
     const earth = new T.Mesh(new T.SphereGeometry(1, 72, 48), new T.MeshStandardMaterial({ map, roughness: .85, metalness: 0 }));
     earth.rotation.y = -Math.PI / 2; world.add(earth);
+    // Opaque core so the starry backdrop never shows through the planet.
+    world.add(new T.Mesh(new T.SphereGeometry(.995, 72, 48), new T.MeshBasicMaterial({ color: 0x060709 })));
     world.add(new T.Mesh(new T.SphereGeometry(1.018, 72, 48), new T.MeshBasicMaterial({ color: sky, transparent: true, opacity: .13, side: T.BackSide, depthWrite: false })));
     const addSprite = (texture: T.Texture, position: T.Vector3, width: number, height: number, identity: { userIndex: number }) => {
       const sprite = new T.Sprite(new T.SpriteMaterial({ map: texture, transparent: true, depthTest: false, depthWrite: false, toneMapped: false }));

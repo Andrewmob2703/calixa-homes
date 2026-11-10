@@ -132,6 +132,7 @@
 
 @layer base { h1,h2,h3 { font-family: var(--font-display); letter-spacing: -0.02em; } body { font-family: var(--font-sans); } }
 @utility bg-hero-overlay { background-image: var(--hero-overlay); }
+@utility night-sky { background: radial-gradient(ellipse at center, oklch(0.16 0.005 260) 0%, oklch(0.09 0 0) 55%, oklch(0.05 0 0) 100%); }
 @utility shadow-glow { box-shadow: var(--shadow-glow); }
 @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
 @utility animate-marquee { animation: marquee 30s linear infinite; }

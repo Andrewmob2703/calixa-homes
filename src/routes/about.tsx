@@ -34,7 +34,7 @@ function About() {
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground">Too many people abroad send money home for a house and get excuses, missing materials or unfinished walls. CalixaHomes was started to change that. You order the materials, we deliver them to your site, and you see every step until your keys are in hand.</p>
       </section>
       <section className="mx-auto max-w-6xl px-6">
-        <div className="bg-secondary pb-10 pt-8">
+        <div className="night-sky pb-10 pt-8">
           <DiasporaGlobe />
           <p className="mx-auto max-w-xl pt-6 text-center text-lg text-secondary-foreground">Wherever you are in the world, CalixaHomes reaches your building site back home.</p>
         </div>
