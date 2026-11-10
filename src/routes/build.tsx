@@ -68,12 +68,8 @@ function BuildPage() {
             <h1 className="max-w-3xl text-5xl font-extrabold leading-[1.05] md:text-7xl">Build back home,<br />without the stress.</h1>
             <p className="mt-6 max-w-xl text-lg opacity-90">Order cement, iron rods and building materials from anywhere in the world. We deliver to your site and keep you updated until your house is done.</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <AppComingSoonDialog source="build_start_ordering" description={appDescription}>
-                <Button className="h-auto rounded-full px-7 py-3 font-bold shadow-glow">Start Ordering</Button>
-              </AppComingSoonDialog>
-              <AppComingSoonDialog source="build_track_project" description={appDescription}>
-                <Button variant="outline" className="h-auto rounded-full border-secondary-foreground/40 bg-transparent px-7 py-3 font-bold text-secondary-foreground">Track a Project</Button>
-              </AppComingSoonDialog>
+              <Button className="h-auto rounded-full px-7 py-3 font-bold shadow-glow" onClick={() => document.getElementById("get-the-app")?.scrollIntoView({ behavior: "smooth", block: "start" })}>Start Ordering</Button>
+              <Button variant="outline" className="h-auto rounded-full border-secondary-foreground/40 bg-transparent px-7 py-3 font-bold text-secondary-foreground" onClick={() => document.getElementById("track-the-app")?.scrollIntoView({ behavior: "smooth", block: "start" })}>Track a Project</Button>
             </div>
           </div>
         </div>
@@ -133,7 +129,8 @@ function BuildPage() {
       </section>
 
       {/* Tracking */}
-      <section id="track" className="mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-2 md:items-center">
+      <section id="track" className="mx-auto max-w-6xl px-6 py-24">
+      <div className="grid gap-12 md:grid-cols-2 md:items-center">
         <div>
           <h2 className="text-4xl font-extrabold md:text-5xl">Watch your house rise, from miles away.</h2>
           <p className="mt-4 text-lg text-muted-foreground">Every delivery and every milestone is logged with photos, so you always know what was delivered, what was used and what comes next.</p>
@@ -150,6 +147,13 @@ function BuildPage() {
             ))}
           </ul>
         </div>
+      </div>
+      <div id="track-the-app" className="mt-14 scroll-mt-6 rounded-3xl bg-card p-8 text-center shadow-sm">
+        <p className="text-sm font-semibold uppercase tracking-widest text-primary">Coming soon</p>
+        <h3 className="mt-3 text-2xl font-extrabold md:text-3xl">Track it all from your phone</h3>
+        <p className="mx-auto mt-3 max-w-xl text-muted-foreground">The CalixaHomes app is in development. Tap a store below to be told the day it launches — or contact us to follow your project today.</p>
+        <AppStoreBadges className="mt-6 justify-center" source="build_app_store" />
+      </div>
       </section>
 
       {/* CTA */}

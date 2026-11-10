@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { AppComingSoonDialog } from "@/components/AppComingSoonDialog";
+import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { ServiceSlideshow } from "@/components/ServiceSlideshow";
 import { careImages } from "@/components/service-images";
 
@@ -53,7 +53,7 @@ function CarePage() {
         <ServiceSlideshow images={careImages} label="Calixa Care photos" />
         <div className="pointer-events-none absolute inset-0 bg-hero-overlay" />
         <div className="pointer-events-none relative mx-auto max-w-6xl px-6 pb-24 [&_nav]:pointer-events-auto [&_form]:pointer-events-auto">
-          <SiteNav light />
+          <SiteNav light getStartedHash="get-the-app" />
           <div className="pt-16 text-secondary-foreground">
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Calixa Care</p>
             <p className="mb-3 font-display text-2xl font-bold">Your Home. Our Care.</p>
@@ -86,7 +86,7 @@ function CarePage() {
                 <input type="time" value={time} onChange={(e) => setTime(e.target.value)} aria-label="Time" className="w-28 rounded-xl border border-input bg-background p-3 text-sm font-semibold text-foreground" />
               </div>
             </div>
-            <AppComingSoonDialog source="find_a_pro"><button type="button" className="grid place-items-center self-end rounded-xl bg-primary p-3 font-bold text-primary-foreground">Find a pro</button></AppComingSoonDialog>
+            <button type="button" onClick={() => document.getElementById("get-the-app")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="grid place-items-center self-end rounded-xl bg-primary p-3 font-bold text-primary-foreground">Find a pro</button>
           </form>
         </div>
       </section>
@@ -134,6 +134,12 @@ function CarePage() {
             </div>
           ))}
         </div>
+        <div id="get-the-app" className="mt-14 scroll-mt-6 rounded-3xl bg-card p-8 text-center shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">Coming soon</p>
+          <h3 className="mt-3 text-2xl font-extrabold md:text-3xl">Book a pro from your phone</h3>
+          <p className="mx-auto mt-3 max-w-xl text-muted-foreground">The CalixaHomes app is in development. Tap a store below to be told the day it launches — or contact us to book a service today.</p>
+          <AppStoreBadges className="mt-6 justify-center" source="care_app_store" />
+        </div>
       </section>
 
       <section className="bg-muted py-24">
@@ -157,7 +163,7 @@ function CarePage() {
         <div className="mt-4 flex flex-wrap justify-center gap-3">{areas.map((a) => <span key={a} className="rounded-full border border-border px-5 py-2 font-semibold">{a}</span>)}</div>
         <h2 className="mx-auto mt-14 max-w-2xl text-4xl font-extrabold md:text-5xl">Are you a skilled pro? Join Calixa Care.</h2>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground">Get steady house-maintenance jobs from diaspora homeowners and get paid on time.</p>
-        <AppComingSoonDialog source="provider"><button type="button" className="mt-8 inline-block rounded-full bg-primary px-8 py-3 font-bold text-primary-foreground shadow-glow">Apply as a provider</button></AppComingSoonDialog>
+        <button type="button" onClick={() => document.getElementById("get-the-app")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="mt-8 inline-block rounded-full bg-primary px-8 py-3 font-bold text-primary-foreground shadow-glow">Apply as a provider</button>
       </section>
       <SiteFooter />
     </main>
