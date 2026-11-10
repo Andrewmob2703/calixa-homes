@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Mail, Phone, MessageCircle } from "lucide-react";
 import { SiteNav, SiteFooter, SUPPORT_EMAIL, SUPPORT_PHONE, SOCIALS } from "@/components/SiteChrome";
+import { AppStoreBadges } from "@/components/AppStoreBadges";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -54,6 +55,12 @@ function Contact() {
           <textarea required rows={5} placeholder="Tell us about your project" className={field} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
           <button type="submit" className="w-full rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground shadow-glow">Send message</button>
         </form>
+      </section>
+      <section className="bg-muted py-20 text-center">
+        <p className="text-sm font-semibold uppercase tracking-widest text-primary">Coming soon</p>
+        <h2 className="mt-3 text-3xl font-extrabold md:text-4xl">Get the CalixaHomes app</h2>
+        <p className="mx-auto mt-4 max-w-xl px-6 text-muted-foreground">Order materials, book house pros and follow your project from your phone. Tap a store below to be told the day it launches — or contact us to start today.</p>
+        <AppStoreBadges className="mt-8 justify-center" source="contact_app_store" />
       </section>
       <SiteFooter />
     </main>

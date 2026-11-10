@@ -8,8 +8,8 @@ function PlayIcon({ className }: { className?: string }) {
 }
 
 const stores = [
-  { label: "App Store", top: "Download on the", Icon: AppleIcon, iconClass: "h-6 w-6" },
-  { label: "Google Play", top: "Get it on", Icon: PlayIcon, iconClass: "h-5 w-5" },
+  { label: "App Store", top: "Download on the", Icon: AppleIcon, iconClass: "h-8 w-8" },
+  { label: "Google Play", top: "Get it on", Icon: PlayIcon, iconClass: "h-7 w-7" },
 ];
 
 export function AppStoreBadges({
@@ -31,9 +31,9 @@ export function AppStoreBadges({
     <div className={`flex flex-wrap gap-3 ${className}`}>
       {stores.map(({ label, top, Icon, iconClass }) => (
         <AppComingSoonDialog key={label} source={source} description={description}>
-          <button type="button" aria-label={`CalixaHomes on ${label} (coming soon)`} className={`flex items-center gap-2 rounded-xl border px-4 py-2 text-left transition-colors ${toneClass}`}>
+          <button type="button" aria-label={`CalixaHomes on ${label} (coming soon)`} className={`flex items-center gap-3 rounded-2xl border px-9 py-3.5 text-left transition-colors ${toneClass}`}>
             <Icon className={iconClass} />
-            <span className="leading-tight"><span className="block text-[10px] opacity-75">{top}</span><span className="block text-sm font-bold">{label}</span></span>
+            <span className="leading-tight"><span className="block text-sm opacity-75">{top}</span><span className="block text-xl font-bold">{label}</span></span>
           </button>
         </AppComingSoonDialog>
       ))}

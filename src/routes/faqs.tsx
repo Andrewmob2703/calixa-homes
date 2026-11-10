@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
+import { AppStoreBadges } from "@/components/AppStoreBadges";
 
 export const Route = createFileRoute("/faqs")({
   head: () => ({
@@ -42,6 +43,12 @@ function Faqs() {
             </details>
           ))}
         </div>
+      </section>
+      <section className="bg-muted py-20 text-center">
+        <p className="text-sm font-semibold uppercase tracking-widest text-primary">Coming soon</p>
+        <h2 className="mt-3 text-3xl font-extrabold md:text-4xl">Get the CalixaHomes app</h2>
+        <p className="mx-auto mt-4 max-w-xl px-6 text-muted-foreground">Order materials, book house pros and follow your project from your phone. Tap a store below to be told the day it launches — or contact us to start today.</p>
+        <AppStoreBadges className="mt-8 justify-center" source="faqs_app_store" />
       </section>
       <SiteFooter />
     </main>

@@ -1,7 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { Target, Eye, HeartHandshake } from "lucide-react";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
 import DiasporaGlobe from "@/components/DiasporaGlobe";
+import { AppStoreBadges } from "@/components/AppStoreBadges";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -49,7 +50,8 @@ function About() {
       </section>
       <section className="bg-muted py-20 text-center">
         <h2 className="mx-auto max-w-2xl px-6 text-4xl font-extrabold">Ready to start your build?</h2>
-        <Link to="/contact" className="mt-8 inline-block rounded-full bg-primary px-8 py-3 font-bold text-primary-foreground shadow-glow">Talk to us</Link>
+        <p className="mx-auto mt-4 max-w-xl px-6 text-muted-foreground">The CalixaHomes app is in development. Tap a store below to be told the day it launches — or contact us to start today.</p>
+        <AppStoreBadges className="mt-8 justify-center" source="about_app_store" />
       </section>
       <SiteFooter />
     </main>

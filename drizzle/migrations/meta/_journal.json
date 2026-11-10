@@ -15,6 +15,13 @@
       "when": 1794115312697,
       "tag": "0001_validate_public_waitlist_submissions",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794300830350,
+      "tag": "0002_allow_app_store_signup_sources",
+      "breakpoints": true
     }
   ]
 }
