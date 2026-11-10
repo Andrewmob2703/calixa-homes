@@ -6,6 +6,7 @@ import { buildImages } from "@/components/service-images";
 import delivery from "@/assets/calixa-build-branded-delivery.jpg";
 import site from "@/assets/calixa-build-foundations-branded.jpg";
 import { AppComingSoonDialog } from "@/components/AppComingSoonDialog";
+import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/build")({
@@ -61,7 +62,7 @@ function BuildPage() {
         <ServiceSlideshow images={buildImages} label="Calixa Build photos" controlsClassName="bottom-20" />
         <div className="pointer-events-none absolute inset-0 bg-hero-overlay" />
         <div className="pointer-events-none relative mx-auto flex min-h-screen max-w-6xl flex-col px-6 [&_nav]:pointer-events-auto [&_button]:pointer-events-auto">
-          <SiteNav light getStartedSource="build_get_started" />
+          <SiteNav light getStartedHash="get-the-app" />
           <div className="flex flex-1 flex-col justify-center pb-24 text-secondary-foreground">
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Build The Calixa Way</p>
             <h1 className="max-w-3xl text-5xl font-extrabold leading-[1.05] md:text-7xl">Build back home,<br />without the stress.</h1>
@@ -121,6 +122,12 @@ function BuildPage() {
                 <p className="mt-2 text-sm text-muted-foreground">{d}</p>
               </div>
             ))}
+          </div>
+          <div id="get-the-app" className="mt-14 scroll-mt-6 rounded-3xl bg-card p-8 text-center shadow-sm">
+            <p className="text-sm font-semibold uppercase tracking-widest text-primary">Coming soon</p>
+            <h3 className="mt-3 text-2xl font-extrabold md:text-3xl">Order it from your phone</h3>
+            <p className="mx-auto mt-3 max-w-xl text-muted-foreground">The CalixaHomes app is in development. Tap a store below to be told the day it launches — or contact us to start your build today.</p>
+            <AppStoreBadges className="mt-6 justify-center" source="build_app_store" />
           </div>
         </div>
       </section>

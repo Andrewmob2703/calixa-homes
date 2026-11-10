@@ -3,6 +3,7 @@ import { ArrowRight, Globe, ShieldCheck, Eye } from "lucide-react";
 import { SiteNav, SiteFooter } from "@/components/SiteChrome";
 import { ServiceSlideshow } from "@/components/ServiceSlideshow";
 import DiasporaGlobe from "@/components/DiasporaGlobe";
+import { AppStoreBadges } from "@/components/AppStoreBadges";
 import { landingImages } from "@/components/service-images";
 import buildImg from "@/assets/calixa-build-branded-delivery.jpg";
 import careImg from "@/assets/calixa-care-plumbing.jpg";
@@ -33,7 +34,7 @@ function Landing() {
         <ServiceSlideshow images={landingImages} label="CalixaHomes Build and Care photos" />
         <div className="pointer-events-none absolute inset-0 bg-hero-overlay" />
         <div className="pointer-events-none relative mx-auto max-w-6xl px-6 pb-20 [&_nav]:pointer-events-auto">
-          <SiteNav light getStartedSource="landing_get_started" />
+          <SiteNav light getStartedHash="get-the-app" />
           <div className="pt-14 text-secondary-foreground">
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">Welcome to CalixaHomes</p>
             <h1 className="max-w-3xl text-5xl font-extrabold leading-[1.05] md:text-7xl">Your home back home, handled.</h1>
@@ -57,6 +58,15 @@ function Landing() {
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      <section id="get-the-app" className="scroll-mt-6 border-t border-border bg-muted py-16">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">Coming soon</p>
+          <h2 className="mt-3 text-3xl font-extrabold md:text-4xl">Get the CalixaHomes app</h2>
+          <p className="mx-auto mt-4 max-w-xl text-muted-foreground">Order materials, book house pros and follow your project from your phone. Tap a store below to be told the day it launches — or contact us to start today.</p>
+          <AppStoreBadges className="mt-8 justify-center" source="landing_app_store" />
         </div>
       </section>
 
