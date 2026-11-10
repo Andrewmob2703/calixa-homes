@@ -31,7 +31,7 @@ export function AppStoreBadges({
     <div className={`flex flex-wrap gap-3 ${className}`}>
       {stores.map(({ label, top, Icon, iconClass }) => (
         <AppComingSoonDialog key={label} source={source} description={description}>
-          <button type="button" aria-label={`CalixaHomes on ${label} (coming soon)`} className={`flex items-center gap-3 rounded-2xl border px-9 py-3.5 text-left transition-colors ${toneClass}`}>
+          <button type="button" aria-label={`CalixaHomes on ${label} (coming soon)`} className={`flex items-center gap-3 rounded-2xl border px-14 py-3.5 text-left transition-colors ${toneClass}`}>
             <Icon className={iconClass} />
             <span className="leading-tight"><span className="block text-sm opacity-75">{top}</span><span className="block text-xl font-bold">{label}</span></span>
           </button>

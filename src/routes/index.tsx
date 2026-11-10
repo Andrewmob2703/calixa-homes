@@ -77,17 +77,17 @@ function Landing() {
         </div>
       </section>
 
-      <section className="bg-secondary py-16 text-secondary-foreground">
+      <section className="bg-muted py-16">
         <div className="mx-auto grid max-w-6xl gap-6 px-6 md:grid-cols-3">
           {[
             { icon: ShieldCheck, t: "Verified people", d: "Suppliers, builders and home pros are screened by us." },
             { icon: Eye, t: "Full visibility", d: "Photo updates for every delivery, milestone and visit." },
             { icon: Globe, t: "Built for the diaspora", d: "Manage everything and pay from wherever you live." },
           ].map(({ icon: I, t, d }) => (
-            <div key={t} className="rounded-2xl bg-secondary-foreground/10 p-6">
+            <div key={t} className="rounded-2xl bg-card p-6 shadow-sm">
               <I className="h-8 w-8 text-primary" />
               <h3 className="mt-4 font-bold">{t}</h3>
-              <p className="mt-2 text-sm opacity-80">{d}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{d}</p>
             </div>
           ))}
         </div>
