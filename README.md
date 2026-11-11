@@ -1,32 +1,64 @@
 # Calixa Homes
 
-Clone this website: https://www.frema.io 
+**Build The Calixa Way**
 
-The website is for a platform that provides building construction services to Africans in the diaspora, allowing them to order construction materials like cement, iron rods, etc and have it delivered to their construction sites. 
+Calixa Homes connects Africans in the diaspora with the people, materials and
+services needed to build and maintain a home back home — without having to be
+there in person.
 
-While cloning the site, change the images to capture the purpose of the platform. For example, the background image could depict a home construction site in Ghana.
+Ordering a bag of cement from abroad should not depend on a phone call to a
+cousin, and progress on a building site should not be a matter of trust.
+Calixa Homes puts the whole journey in one place: what was ordered, what was
+delivered, who is on site, and how the build is moving forward.
 
-Edit the wordings stop to capture the purpose of the platform
+## What we do
 
-This project was built with [Lovable](https://lovable.dev).
+### Calixa Build
 
-**Live app**: https://calixa-homes.lovable.app
+Construction materials and building services for sites across Africa.
 
-## Build with Lovable
+- Order materials such as cement, iron rods, blocks and finishes.
+- Have them delivered to your construction site.
+- Track each delivery from dispatch to arrival.
+- Follow construction progress through to completion.
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/5fc4918e-fe51-4ed6-a61a-572c7bdfe7cd).
+### Calixa Care
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+House maintenance for homes you are building, or already living in.
 
-## Development
+- Book trusted tradespeople for the work a house needs to stay in good shape.
+- Painting, gardening, roof and general repairs.
+- Book by date and time, and keep a record of the work done.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+## On this site
+
+| Page | What you will find |
+| --- | --- |
+| Home | Both services side by side, and the globe showing where Calixa Homes is building |
+| Calixa Build | Materials, how ordering works, and project tracking |
+| Calixa Care | Maintenance services, booking, care plans and locations |
+| About Us | Who Calixa Homes is for and how the platform came together |
+| FAQs | Common questions about ordering, delivery, payment and trust |
+| Contact Us | Email, phone and a direct message form |
+
+The mobile app is in development. Every "Get Started", "Start Ordering",
+"Track a Project" and "Find a pro" action points to the app sign-up, where you
+can leave your email to be notified the moment it is ready — or contact us
+directly and start now.
+
+## Contact
+
+- Email: help@calixahomes.com
+- Phone: +1 (925) 384-6734
+- Live site: https://calixa-homes.lovable.app
+
+## Running this project
+
+You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ```sh
 git clone <this-repository-url>
-cd <repository-name>
+cd calixa-homes
 npm i
 npm run dev
 ```
