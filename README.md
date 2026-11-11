@@ -1,14 +1,24 @@
-# Welcome to your Lovable project
+# Calixa Homes
+
+Clone this website: https://www.frema.io 
+
+The website is for a platform that provides building construction services to Africans in the diaspora, allowing them to order construction materials like cement, iron rods, etc and have it delivered to their construction sites. 
+
+While cloning the site, change the images to capture the purpose of the platform. For example, the background image could depict a home construction site in Ghana.
+
+Edit the wordings stop to capture the purpose of the platform
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://calixa-homes.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/5fc4918e-fe51-4ed6-a61a-572c7bdfe7cd).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +30,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
